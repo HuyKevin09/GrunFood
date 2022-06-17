@@ -3,7 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome } from '@expo/vector-icons';
+import {FontAwesome, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -14,8 +14,10 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import RecettesScreen from '../screens/RecettesScreen';
+import FavorisScreen from '../screens/FavorisScreen';
+import SuiviScreen from "../screens/SuiviScreen";
+import AjoutScreen from "../screens/AjoutScreen";
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -58,24 +60,35 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Recettes"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
+        // couleurs de la barre de navigation
+        tabBarActiveTintColor: "#209209",
+        tabBarInactiveTintColor: "white",
+        tabBarInactiveBackgroundColor: "#434A40",
+        tabBarActiveBackgroundColor: "#434A40",
+        headerStyle: {
+          backgroundColor: "#209209"
+        },
+        headerTintColor: "#209209",
+        headerTitleStyle: {
+            fontWeight: "bold"
+        }
       }}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        name="Recettes"
+        component={RecettesScreen}
+        options={({ navigation }: RootTabScreenProps<'Recettes'>) => ({
+          title: 'GrünMeal',
+          tabBarIcon: ({ color }) => <TabBarIcon name="book-open-page-variant" color={color} />,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}>
-              <FontAwesome
-                name="info-circle"
+              <MaterialCommunityIcons
+                name="information-outline"
                 size={25}
                 color={Colors[colorScheme].text}
                 style={{ marginRight: 15 }}
@@ -85,13 +98,29 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
+        name="Ajout"
+        component={AjoutScreen}
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Ajout',
+          tabBarIcon: ({ color }) => <TabBarIcon name="plus-circle-outline" color={color} />,
         }}
       />
+        <BottomTab.Screen
+            name="Suivi"
+            component={SuiviScreen}
+            options={{
+                title: 'Suivi',
+                tabBarIcon: ({ color }) => <TabBarIcon name="chart-areaspline" color={color} />,
+            }}
+        />
+        <BottomTab.Screen
+            name="Favoris"
+            component={FavorisScreen}
+            options={{
+                title: 'Favoris',
+                tabBarIcon: ({ color }) => <TabBarIcon name="heart" color={color} />,
+            }}
+        />
     </BottomTab.Navigator>
   );
 }
@@ -100,8 +129,8 @@ function BottomTabNavigator() {
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
+  name: React.ComponentProps<typeof MaterialCommunityIcons>['name'];
   color: string;
 }) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <MaterialCommunityIcons size={30} style={{ marginBottom: -3 }} {...props} />;
 }
