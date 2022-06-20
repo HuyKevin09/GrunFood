@@ -4,7 +4,6 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import DropDownPicker from 'react-native-dropdown-picker'
 import {useState} from "react";
-import {SearchBar} from "@rneui/themed";
 
 export default function AjoutScreen() {
     return (
@@ -21,7 +20,6 @@ const Searchbar = () => {
     const [value, setValue] = useState(null);
     return (
         <View style={styles.container}>
-            <SearchBar/>
         </View>
     )
 }
