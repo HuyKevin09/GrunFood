@@ -1,16 +1,52 @@
-import { StyleSheet } from 'react-native';
+import {Button, ScrollView, StyleSheet, TextInput} from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
-import DropDownPicker from 'react-native-dropdown-picker'
-import {useState} from "react";
+import {Component, useState} from "react";
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 
 export default function AjoutScreen() {
     return (
         <View style={styles.container}>
+
             <Searchbar/>
-            <Text style={styles.title}>Ajout</Text>
-            <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+
+            <View style={styles.ingredients_div}>
+                <Text style={styles.title}>Vos ingrédients</Text>
+                <ScrollView style={styles.ingredients}>
+                    <Text style={styles.title}>Je rigole</Text>
+                    <Text style={styles.title}>Je rigole</Text>
+                    <Text style={styles.title}>Je rigole</Text>
+                    <Text style={styles.title}>Je rigole</Text>
+                    <Text style={styles.title}>Je rigole</Text>
+                    <Text style={styles.title}>Je rigole</Text>
+                    <Text style={styles.title}>Je rigole</Text>
+                    <Text style={styles.title}>Je rigole</Text>
+                    <Text style={styles.title}>Je rigole</Text>
+                    <Text style={styles.title}>Je rigole</Text>
+                    <Text style={styles.title}>Je rigole</Text>
+                    <Text style={styles.title}>Je rigole</Text>
+                    <Text style={styles.title}>Je rigole</Text>
+                    <Text style={styles.title}>Je rigole</Text>
+                    <Text style={styles.title}>Je rigole</Text>
+                    <Text style={styles.title}>Je rigole</Text>
+                    <Text style={styles.title}>Je rigole</Text>
+                </ScrollView>
+            </View>
+
+            <View style={styles.button_div}>
+                <Button
+                    title={"Rechercher une recette"}
+                    color={"#FFFFFF"}
+                />
+            </View>
+
+            <View style={styles.button_div}>
+                <Button
+                    title={"Ajouter dans consommation"}
+                    color={"#FFFFFF"}
+                />
+            </View>
         </View>
 );
 }
@@ -18,19 +54,36 @@ export default function AjoutScreen() {
 const Searchbar = () => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
+    // let clicked = false
+    // if(!clicked) {
     return (
         <View style={styles.container}>
+            <TextInput
+                style={styles.textInput}
+                placeholder={"Entrez le nom de vos ingrédients"}
+                // onPressIn={() => {
+                //     clicked = true
+                // }}
+                // onPressOut={() => {
+                //     clicked = false
+                // }}
+            >
+            </TextInput>
         </View>
     )
+    // }
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: "flex-start",
+        marginTop: 10,
+        
     },
     title: {
+        textAlign: "center",
         fontSize: 20,
         fontWeight: 'bold',
     },
@@ -38,5 +91,35 @@ const styles = StyleSheet.create({
         marginVertical: 30,
         height: 1,
         width: '80%',
+    },
+    textInput: {
+        borderStyle: "solid",
+        borderWidth: 2,
+        borderColor: "#209209",
+        borderRadius: 10,
+        paddingLeft: 30,
+        paddingRight: 30,
+        fontSize: 18,
+        paddingTop: 6,
+        paddingBottom: 6,
+    },
+    ingredients_div: {
+        top: 65,
+        position: "absolute",
+        borderStyle: "solid",
+        borderWidth: 2,
+        borderRadius: 8,
+        borderColor: "#209209",
+        height: "70%",
+        width: "90%",
+    },
+    button_div: {
+        borderStyle: "solid",
+        backgroundColor: "#209209",
+        borderRadius: 20,
+        margin: 2,
+    },
+    ingredients: {
+        backgroundColor: "red",
     },
 });

@@ -3,7 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import {FontAwesome, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer, DefaultTheme, DarkTheme} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -12,7 +12,6 @@ import {ColorSchemeName, Pressable} from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import RecettesScreen from '../screens/RecettesScreen';
 import FavorisScreen from '../screens/FavorisScreen';
@@ -85,7 +84,7 @@ function BottomTabNavigator() {
                 name="Recettes"
                 component={RecettesScreen}
                 options={({navigation} : RootTabScreenProps<'Recettes'>) => ({
-                    title: 'GrünMeal',
+                    title: 'Recettes',
                     headerTintColor: "black",
                     tabBarIcon: ({color}) => <TabBarIcon name="book-open-page-variant" color={color}/>,
                     headerRight: () => (
@@ -122,7 +121,7 @@ function BottomTabNavigator() {
                 name="Ajout"
                 component={AjoutScreen}
                 options={({navigation} : RootTabScreenProps<'Ajout'>) => ({
-                    title: 'GrünMeal',
+                    title: 'Ajout',
                     headerTintColor: "black",
                     tabBarIcon: ({color}) => <TabBarIcon name="plus-circle-outline" color={color}/>,
                     headerLeft: () => (
@@ -145,7 +144,7 @@ function BottomTabNavigator() {
                 name="Suivi"
                 component={SuiviScreen}
                 options={({navigation} : RootTabScreenProps<'Suivi'>) => ({
-                    title: 'GrünMeal',
+                    title: 'Suivi',
                     headerTintColor: "black",
                     tabBarIcon: ({color}) => <TabBarIcon name="chart-areaspline" color={color}/>,
                     headerLeft: () => (
@@ -168,7 +167,7 @@ function BottomTabNavigator() {
                 name="Favoris"
                 component={FavorisScreen}
                 options={({navigation} : RootTabScreenProps<'Favoris'>) => ({
-                    title: 'GrünMeal',
+                    title: 'Favoris',
                     headerTintColor: "black",
                     tabBarIcon: ({color}) => <TabBarIcon name="heart" color={color}/>,
                     headerLeft: () => (
