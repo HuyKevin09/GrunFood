@@ -8,9 +8,8 @@ import DropDownPicker from "react-native-dropdown-picker";
 export default function ProfilScreen() {
     return (
         <View style={styles.container}>
+            <Text>Prénom Nom</Text>
             <DropDown/>
-            <Text style={styles.title}>Profil</Text>
-            <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
         </View>
     );
 }
