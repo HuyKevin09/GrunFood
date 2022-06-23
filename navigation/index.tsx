@@ -16,7 +16,7 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import RecettesScreen from '../screens/RecettesScreen';
 import FavorisScreen from '../screens/FavorisScreen';
 import SuiviScreen from "../screens/SuiviScreen";
-import AjoutScreen from "../screens/AjoutScreen";
+import RechercheScreen from "../screens/RechercheScreen";
 import {RootStackParamList, RootTabParamList, RootTabScreenProps} from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import ProfilScreen from "../screens/ProfilScreen";
@@ -118,12 +118,12 @@ function BottomTabNavigator() {
                 })}
             />
             <BottomTab.Screen
-                name="Ajout"
-                component={AjoutScreen}
-                options={({navigation} : RootTabScreenProps<'Ajout'>) => ({
-                    title: 'Ajout',
+                name="Recherche"
+                component={RechercheScreen}
+                options={({navigation} : RootTabScreenProps<'Recherche'>) => ({
+                    title: 'Recherche',
                     headerTintColor: "black",
-                    tabBarIcon: ({color}) => <TabBarIcon name="plus-circle-outline" color={color}/>,
+                    tabBarIcon: ({color}) => <TabBarIcon name="magnify" color={color}/>,
                     headerLeft: () => (
                         <Pressable
                             onPress={() => navigation.navigate('Profil')}

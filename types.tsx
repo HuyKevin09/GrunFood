@@ -29,7 +29,7 @@ export type RootTabParamList = {
   Recettes: undefined;
   Favoris: undefined;
   Suivi: undefined;
-  Ajout: undefined;
+  Recherche: undefined;
   Profil: undefined;
 };
 
