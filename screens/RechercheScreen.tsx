@@ -4,6 +4,8 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import {Component, useState} from "react";
 import {MaterialCommunityIcons} from '@expo/vector-icons';
+import createStackNavigator from "react-native-screens/createNativeStackNavigator";
+import RecettesScreen from "./RecettesScreen";
 
 export default function RechercheScreen() {
     return (
@@ -20,7 +22,9 @@ export default function RechercheScreen() {
                     <Text style={styles.button_title}>Rechercher un recette</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate("Recettes")}
+                >
                     <MaterialCommunityIcons name={"upload-outline"} size={40} color={"#209209"} style={styles.upload}/>
                 </TouchableOpacity>
             </View>
@@ -51,6 +55,16 @@ const Searchbar = () => {
     )
     // }
 }
+
+const Item = ({item}) => (
+    <TouchableOpacity style={styles.item}>
+        <Image style={styles.image} source = {{ uri: item.image}}/>
+        <View style={{alignItems: "center", flexDirection:'row', backgroundColor: "#F5F5F5"}}>
+            <Text style={styles.flatListTitle}>{item.ingredient}</Text>
+            <MaterialCommunityIcons name={"plus"} size={50} color={"#209209"}/>
+        </View>
+    </TouchableOpacity>
+);
 
 const App = () => {
     const [selectedId, setSelectedId] = useState(null);
@@ -107,16 +121,6 @@ const DATA = [
         unite : "kg",
     },
 ];
-
-const Item = ({item}) => (
-    <TouchableOpacity style={styles.item}>
-        <Image style={styles.image} source = {{ uri: item.image}}/>
-        <View style={{alignItems: "center", flexDirection:'row', backgroundColor: "#F5F5F5"}}>
-            <Text style={styles.flatListTitle}>{item.ingredient}</Text>
-            <MaterialCommunityIcons name={"plus"} size={50} color={"#209209"}/>
-        </View>
-    </TouchableOpacity>
-);
 
 const styles = StyleSheet.create({
     container: {
