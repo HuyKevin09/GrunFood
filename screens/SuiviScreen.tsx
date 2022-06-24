@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView, ScrollView, StatusBar, FlatList, Image } from 'react-native';
+import { StyleSheet, ScrollView, StatusBar, FlatList, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 /* npm install react-native-chart-kit*/
 import { LineChart, BarChart, PieChart, ProgressChart, ContributionGraph, StackedBarChart } from 'react-native-chart-kit'
 
@@ -25,10 +25,10 @@ export default function SuiviScreen() {
                     <View style= {styles.indices}> 
 
                         <View style = {{alignItems: 'center', backgroundColor: "rgba(217, 242, 229, 0.27)", }}>
-                            <Text style={{textAlign: 'left'}}> Indice de pollution </Text>
+                            <Text style={{textAlign: 'left'}}> Indice de pollution   </Text>
                         </View>
                         <View style = {{alignItems: 'center',}}>
-                            <Text> IC </Text>
+                            <Text> Indice de Consommation </Text>
                         </View>
 
                     </View>
@@ -88,24 +88,26 @@ const data = {
         strokeWidth: 2
       }
     ],
-    legend: ["Indice de pollution"] 
+    legend: ["Indice hebdomadaire"] 
   };
 
 const Date = () => {
     return(
             <View style = {{flexDirection: 'row', justifyContent:'space-around', width: "60%", top: 450,}}>
-
-                <AntDesign name="leftcircleo" size={24} color="green"/>
+                <TouchableOpacity>
+                    <AntDesign name="leftcircleo" size={24} color="green"/>
+                </TouchableOpacity>
                 <View style = {styles.date}>
-                    <Text> 20-07-22 to 26-07-22 </Text>
+                    <Text> 20-07-22 to 27-07-22 </Text>
                 </View>
-                <AntDesign name="rightcircleo" size={24} color="green" />
-
+                <TouchableOpacity>
+                    <AntDesign name="rightcircleo" size={24} color="green" />
+                </TouchableOpacity>
             </View>
     )
 }
 
-// 
+
 const DATA = [
     {
         id: '0',
@@ -133,12 +135,13 @@ const DATA = [
     },
   ];
 
+
 const Item = ({ item}) => (
     <View style={styles.item}>
         <Image style={styles.image} source = {{ uri: item.image}}/>
-        <View style={{alignItems: 'center', flexDirection:'column'}}>
+        <View style={{alignItems: 'center', justifyContent: 'center', flexDirection:'column', backgroundColor: "#f5f5f5"}}>
             <Text style={styles.flatlisttitle}>{item.ingredient}</Text>
-            <Text style={{fontSize: 15, marginLeft: 60,}}> Quantité : {item.quantite} {item.unite}</Text>
+            <Text style={styles.quantite}> Quantité : {item.quantite} {item.unite}</Text>
         </View>
     </View>
   );
@@ -221,4 +224,9 @@ const styles = StyleSheet.create({
         height: 100,
         width: 100,
     },
+    quantite : {
+        fontSize: 15,
+        marginLeft: 60,
+        marginTop:5,
+    }
 });
