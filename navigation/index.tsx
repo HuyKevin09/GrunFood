@@ -87,20 +87,6 @@ function BottomTabNavigator() {
                     title: 'Recettes',
                     headerTintColor: "black",
                     tabBarIcon: ({color}) => <TabBarIcon name="book-open-page-variant" color={color}/>,
-                    headerRight: () => (
-                        <Pressable
-                            onPress={() => navigation.navigate('Modal')}
-                            style={({pressed}) => ({
-                                opacity: pressed ? 0.5 : 1,
-                            })}>
-                            <MaterialCommunityIcons
-                                name="information-outline"
-                                size={25}
-                                color={Colors[colorScheme].text}
-                                style={{marginRight: 15}}
-                            />
-                        </Pressable>
-                    ),
                     headerLeft: () => (
                         <Pressable
                             onPress={() => navigation.navigate('Profil')}
