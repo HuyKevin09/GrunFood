@@ -18,6 +18,8 @@ export type RootStackParamList = {
   Modal: undefined;
   NotFound: undefined;
   Profil: undefined;
+  Connexion: undefined;
+  Inscription: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
@@ -31,6 +33,7 @@ export type RootTabParamList = {
   Suivi: undefined;
   Recherche: undefined;
   Profil: undefined;
+  Connexion: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<

@@ -20,6 +20,7 @@ import {RootStackParamList, RootTabParamList, RootTabScreenProps} from '../types
 import LinkingConfiguration from './LinkingConfiguration';
 import ProfilScreen from "../screens/ProfilScreen";
 import RechercheScreen from "../screens/RechercheScreen";
+import ConnexionScreen from "../screens/ConnexionScreen";
 
 export default function Navigation({colorScheme} : { colorScheme : ColorSchemeName }) {
     return (
