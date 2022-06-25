@@ -1,9 +1,8 @@
 import React from "react";
 import { StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 
-import {AntDesign } from '@expo/vector-icons';
+import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { Text, View, } from '../components/Themed';
-import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 export default function AjoutScreen() {
     const [values, setValues] = React.useState({ email: '', motDePasse: '' });
@@ -30,7 +29,7 @@ export default function AjoutScreen() {
                     <Text style = {styles.title}> Connexion </Text> 
 
                     <View style={styles.input}>
-                        <MaterialCommunityIcons name={"email-outline"} size={24} color="green" style={{marginRight: 10,}} />
+                        <FontAwesome name="sign-in" size={24} color="green" style={{marginRight: 10,}} />
                         <TextInput
                             onChangeText={(text) => handleChange('email', text)}
                             value={values.email}

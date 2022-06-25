@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 
-import {AntDesign } from '@expo/vector-icons';
+import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { Text, View, } from '../components/Themed';
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 export default function AjoutScreen() {
-    const [values, setValues] = React.useState({ email: '', motDePasse: '' });
+    const [values, setValues] = React.useState({nom: '', telephone: '', email: '', mdp: '', confMdp: '' });
     const handleChange = (name, value) => {
         setValues({
           ...values,
@@ -27,10 +27,28 @@ export default function AjoutScreen() {
                 </View>
 
                 <View style = {styles.box}>
-                    <Text style = {styles.title}> Connexion </Text> 
+                    <Text style = {styles.title}> S'inscrire </Text> 
 
                     <View style={styles.input}>
-                        <MaterialCommunityIcons name={"email-outline"} size={24} color="green" style={{marginRight: 10,}} />
+                        <AntDesign name="user" size={20} color="green" style={{marginRight: 10,}} />
+                        <TextInput
+                            onChangeText={(text) => handleChange('nom', text)}
+                            value={values.nom}
+                            placeholder="Nom et prénom"
+                        />
+                    </View>
+
+                    <View style={styles.input}>
+                        <MaterialCommunityIcons name={"phone-outline"} size={20} color="green" style={{marginRight: 10,}}/>
+                        <TextInput
+                            onChangeText={(text) => handleChange('telephone', text)}
+                            value={values.telephone}
+                            placeholder="Téléphone"
+                        />
+                    </View>
+
+                    <View style={styles.input}>
+                        <MaterialCommunityIcons name={"email-outline"} size={20} color="green" style={{marginRight: 10,}}/>
                         <TextInput
                             onChangeText={(text) => handleChange('email', text)}
                             value={values.email}
@@ -39,21 +57,25 @@ export default function AjoutScreen() {
                     </View>
 
                     <View style={styles.input}>
-                        <AntDesign name="lock1" size={24} color="green" style={{marginRight: 10,}}/>
+                        <AntDesign name="lock1" size={18} color="green" style={{marginRight: 10,}}/>
                         <TextInput
-                            onChangeText={(text) => handleChange('motDePasse', text)}
-                            value={values.motDePasse}
+                            onChangeText={(text) => handleChange('mdp', text)}
+                            value={values.mdp}
                             placeholder="Mot de passe"
                         />
                     </View>
 
-                    <TouchableOpacity style={styles.button}> 
-                        <Text style={styles.buttontext }> Connexion </Text>
-                    </TouchableOpacity>
+                    <View style={styles.input}>
+                        <AntDesign name="lock1" size={18} color="green" style={{marginRight: 10,}}/>
+                        <TextInput
+                            onChangeText={(text) => handleChange('confMdp', text)}
+                            value={values.confMdp}
+                            placeholder="Confirmer le mot de passe"
+                        />
+                    </View>
 
-                    <Text style={styles.text}> Vous n'avez pas encore de compte ? </Text>
-                    <TouchableOpacity style={styles.button2}> 
-                        <Text style={styles.buttontext} > S'inscrire </Text>
+                    <TouchableOpacity style={styles.button}> 
+                        <Text style={styles.buttontext }> Inscription </Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -90,8 +112,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position : "absolute",
         width: "80%",
-        height: 350,
-        marginTop: -130,
+        height: 500,
+        marginTop: -150,
         borderStyle: 'solid',
         borderColor: 'rgb(190, 190, 190)',
         borderWidth: 1,
@@ -102,8 +124,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         justifyContent: 'center',
         width: 213,
-        height: 48,
-        top: 40,
+        height: 45,
+        top: 35,
         fontStyle: 'normal',
         fontWeight: '400',
         fontSize: 35,
@@ -112,9 +134,9 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        height: 50,
+        height: 40,
         margin: 12,
-        top : 70,
+        top : 65,
         borderWidth: 1,
         borderColor: "rgb(190, 190, 190)",
         padding: 10,
@@ -127,7 +149,7 @@ const styles = StyleSheet.create({
     button : {
         backgroundColor: "#209209",
         padding: 10,
-        top: 90,
+        top: 70,
         borderRadius: 100,
         width:"60%",
     },
@@ -138,15 +160,4 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
 
-    text : {
-        top: 170,
-        color: "#CDCCCC",
-    },
-    button2 : {
-        backgroundColor: "#209209",
-        padding: 10,
-        top: 180,
-        borderRadius: 100,
-        width:"60%",
-    },
 });
