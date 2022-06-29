@@ -48,7 +48,7 @@ export default function ProfilScreen({navigation} : RootStackScreenProps<'Connex
                     <Text style={styles.button_title}>Modifier votre profil</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() => navigation.DOUSHANDHY}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.replace("Connexion")}>
                     <Text style={styles.button_title}>Déconnexion</Text>
                 </TouchableOpacity>
                 {/*<Button title={"Modifier votre profil"}/>*/}

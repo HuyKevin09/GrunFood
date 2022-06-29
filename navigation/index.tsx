@@ -41,7 +41,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Connexion" component={ConnexionScreen} options={{title: 'Oops!'}}/>
+            <Stack.Screen name="Connexion" component={ConnexionScreen} options={{headerShown: false}}/>
             <Stack.Screen
                 name="Root"
                 component={BottomTabNavigator}
