@@ -5,8 +5,9 @@ import { Text, View } from '../components/Themed';
 import {useState} from "react";
 import DropDownPicker from "react-native-dropdown-picker";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
+import {RootStackScreenProps} from "../types";
 
-export default function ProfilScreen() {
+export default function ProfilScreen({navigation} : RootStackScreenProps<'Connexion'>) {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
@@ -47,7 +48,7 @@ export default function ProfilScreen() {
                     <Text style={styles.button_title}>Modifier votre profil</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.DOUSHANDHY}>
                     <Text style={styles.button_title}>Déconnexion</Text>
                 </TouchableOpacity>
                 {/*<Button title={"Modifier votre profil"}/>*/}

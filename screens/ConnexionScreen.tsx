@@ -3,8 +3,9 @@ import { StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { Text, View, } from '../components/Themed';
+import {RootStackScreenProps} from "../types";
 
-export default function ConnexionScreen() {
+export default function ConnexionScreen({navigation} : RootStackScreenProps<'NotFound'>) {
     const [values, setValues] = React.useState({ email: '', motDePasse: '' });
     const handleChange = (name, value) => {
         setValues({
@@ -47,7 +48,7 @@ export default function ConnexionScreen() {
                     </View>
 
                     <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttontext }> Connexion </Text>
+                        <Text style={styles.buttontext } onPress={() => navigation.replace('Root')}> Connexion </Text>
                     </TouchableOpacity>
 
                     <Text style={styles.text}> Vous n'avez pas encore de compte ? </Text>
