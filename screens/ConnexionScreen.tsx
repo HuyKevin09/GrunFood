@@ -5,7 +5,7 @@ import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { Text, View, } from '../components/Themed';
 import {RootStackScreenProps} from "../types";
 
-export default function ConnexionScreen({navigation} : RootStackScreenProps<'NotFound'>) {
+export default function ConnexionScreen({navigation} : RootStackScreenProps<'Root'>) {
     const [values, setValues] = React.useState({ email: '', motDePasse: '' });
     const handleChange = (name, value) => {
         setValues({
@@ -52,7 +52,7 @@ export default function ConnexionScreen({navigation} : RootStackScreenProps<'Not
                     </TouchableOpacity>
 
                     <Text style={styles.text}> Vous n'avez pas encore de compte ? </Text>
-                    <TouchableOpacity style={styles.button2}>
+                    <TouchableOpacity style={styles.button2} onPress={() => navigation.replace('Inscription')}>
                         <Text style={styles.buttontext} > S'inscrire </Text>
                     </TouchableOpacity>
                 </View>

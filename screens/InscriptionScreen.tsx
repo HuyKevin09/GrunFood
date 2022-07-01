@@ -5,7 +5,7 @@ import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { Text, View, } from '../components/Themed';
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 
-export default function InscriptionScreen() {
+export default function InscriptionScreen({navigation} : RootStackScreenProps<'Root'>) {
     const [values, setValues] = React.useState({nom: '', telephone: '', email: '', mdp: '', confMdp: '' });
     const handleChange = (name, value) => {
         setValues({
@@ -74,7 +74,7 @@ export default function InscriptionScreen() {
                         />
                     </View>
 
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.replace('Regime')}>
                         <Text style={styles.buttontext }> Inscription </Text>
                     </TouchableOpacity>
                 </View>

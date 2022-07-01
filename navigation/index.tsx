@@ -21,6 +21,9 @@ import LinkingConfiguration from './LinkingConfiguration';
 import ProfilScreen from "../screens/ProfilScreen";
 import RechercheScreen from "../screens/RechercheScreen";
 import ConnexionScreen from "../screens/ConnexionScreen";
+import RegimeScreen from '../screens/RegimeScreen';
+import AllergenesScreen from '../screens/AllergenesScreen';
+import InscriptionScreen from '../screens/InscriptionScreen';
 
 export default function Navigation({colorScheme} : { colorScheme : ColorSchemeName }) {
     return (
@@ -42,6 +45,9 @@ function RootNavigator() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Connexion" component={ConnexionScreen} options={{headerShown: false}}/>
+            <Stack.Screen name="Inscription" component={InscriptionScreen} options={{headerShown: false}}/>
+            <Stack.Screen name="Regime" component={RegimeScreen} options={{headerShown: false}}/>
+            <Stack.Screen name="Allergenes" component={AllergenesScreen} options={{headerShown: false}}/>
             <Stack.Screen
                 name="Root"
                 component={BottomTabNavigator}
