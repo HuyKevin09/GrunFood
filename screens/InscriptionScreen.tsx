@@ -1,18 +1,29 @@
-import React from "react";
+import React, {useState} from "react";
 import { StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import {auth, firebase, database} from '../firebase';
 
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { Text, View, } from '../components/Themed';
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 export default function InscriptionScreen({navigation} : RootStackScreenProps<'Root'>) {
-    const [values, setValues] = React.useState({nom: '', telephone: '', email: '', mdp: '', confMdp: '' });
-    const handleChange = (name, value) => {
-        setValues({
-            ...values,
-            [name]: value,
-        });
-    };
+    const [email, setEmail] = useState('')
+    const [motDePasse, setmotDePasse] = useState('')
+    const [name, setName] = useState('')
+    const [telephone, setTelephone] = useState('')
+
+    const handleSignUp = () => {
+        auth 
+            .createUserWithEmailAndPassword(
+                   email,
+                   motDePasse)
+            .then(() => {
+                navigation.replace("Connexion");
+                const user = firebase.auth().currentUser;
+                console.log('Registered with:', user.email);
+            } )
+            .catch(error => alert(error.message))
+       }
 
     return (
         <View style={styles.container}>
@@ -32,8 +43,8 @@ export default function InscriptionScreen({navigation} : RootStackScreenProps<'R
                     <View style={styles.input}>
                         <AntDesign name="user" size={20} color="green" style={{marginRight: 10,}} />
                         <TextInput
-                            onChangeText={(text) => handleChange('nom', text)}
-                            value={values.nom}
+                            onChangeText={(text) => setName(text)}
+                            value={name}
                             placeholder="Nom et prénom"
                         />
                     </View>
@@ -41,8 +52,8 @@ export default function InscriptionScreen({navigation} : RootStackScreenProps<'R
                     <View style={styles.input}>
                         <MaterialCommunityIcons name={"phone-outline"} size={20} color="green" style={{marginRight: 10,}}/>
                         <TextInput
-                            onChangeText={(text) => handleChange('telephone', text)}
-                            value={values.telephone}
+                            onChangeText={(text) => setTelephone(text)}
+                            value={telephone}
                             placeholder="Téléphone"
                         />
                     </View>
@@ -50,8 +61,8 @@ export default function InscriptionScreen({navigation} : RootStackScreenProps<'R
                     <View style={styles.input}>
                         <MaterialCommunityIcons name={"email-outline"} size={20} color="green" style={{marginRight: 10,}}/>
                         <TextInput
-                            onChangeText={(text) => handleChange('email', text)}
-                            value={values.email}
+                            onChangeText={(text) => setEmail(text)}
+                            value={email}
                             placeholder="Adresse e-mail"
                         />
                     </View>
@@ -59,22 +70,13 @@ export default function InscriptionScreen({navigation} : RootStackScreenProps<'R
                     <View style={styles.input}>
                         <AntDesign name="lock1" size={18} color="green" style={{marginRight: 10,}}/>
                         <TextInput
-                            onChangeText={(text) => handleChange('mdp', text)}
-                            value={values.mdp}
+                            onChangeText={(text) => setmotDePasse(text)}
+                            value={motDePasse}
                             placeholder="Mot de passe"
                         />
                     </View>
 
-                    <View style={styles.input}>
-                        <AntDesign name="lock1" size={18} color="green" style={{marginRight: 10,}}/>
-                        <TextInput
-                            onChangeText={(text) => handleChange('confMdp', text)}
-                            value={values.confMdp}
-                            placeholder="Confirmer le mot de passe"
-                        />
-                    </View>
-
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.replace('Regime')}>
+                    <TouchableOpacity style={styles.button} onPress={handleSignUp}>
                         <Text style={styles.buttontext }> Inscription </Text>
                     </TouchableOpacity>
                 </View>
@@ -82,6 +84,18 @@ export default function InscriptionScreen({navigation} : RootStackScreenProps<'R
         </View>
     );
 }
+
+// onPress={() => navigation.replace('Regime')}
+
+/*<View style={styles.input}>
+                        <AntDesign name="lock1" size={18} color="green" style={{marginRight: 10,}}/>
+                        <TextInput
+                            onChangeText={(text) => handleChange('confMdp', text)}
+                            value={values.confMdp}
+                            placeholder="Confirmer le mot de passe"
+                        />
+                    </View>
+*/
 
 const styles = StyleSheet.create({
     container : {

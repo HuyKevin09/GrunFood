@@ -7,7 +7,20 @@ import DropDownPicker from "react-native-dropdown-picker";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {RootStackScreenProps} from "../types";
 
+import React from 'react';
+import {auth} from '../firebase';
+import { useNavigation } from '@react-navigation/native';
+
 export default function ProfilScreen({navigation} : RootStackScreenProps<'Connexion'>) {
+    
+    const handleSignOut = () => {
+        auth
+            .signOut()
+            .then( () => {
+                navigation.replace("Connexion")
+            })
+    }
+    
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
@@ -18,7 +31,7 @@ export default function ProfilScreen({navigation} : RootStackScreenProps<'Connex
                     <Text style={styles.titles}>Informations personnelles</Text>
                     <View style={styles.row}>
                         <MaterialCommunityIcons name={"email-outline"} size={30}/>
-                        <Text>Email</Text>
+                        <Text> Email : {auth.currentUser?.email}</Text>
                     </View>
                     <View style={styles.row}>
                         <MaterialCommunityIcons name={"phone-outline"} size={30}/>
@@ -48,7 +61,7 @@ export default function ProfilScreen({navigation} : RootStackScreenProps<'Connex
                     <Text style={styles.button_title}>Modifier votre profil</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() => navigation.replace("Connexion")}>
+                <TouchableOpacity style={styles.button} onPress={handleSignOut}>
                     <Text style={styles.button_title}>Déconnexion</Text>
                 </TouchableOpacity>
                 {/*<Button title={"Modifier votre profil"}/>*/}
