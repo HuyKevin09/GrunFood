@@ -6,16 +6,44 @@ import {Component, useState} from "react";
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import createStackNavigator from "react-native-screens/createNativeStackNavigator";
 import RecettesScreen from "./RecettesScreen";
+import ingredients from "../assets/data/ingredients.json"
 
 export default function RechercheScreen() {
+    const [search, setSearch] = useState("")
     return (
         <View style={styles.container}>
 
-            <Searchbar/>
-
-            <View style={styles.ingredients_div}>
-                    <App/>
+            <View style={styles.container}>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder={"Entrez le nom de vos ingrédients"}
+                    onChangeText={(search) => setSearch(search)}
+                >
+                </TextInput>
             </View>
+
+            <ScrollView style={styles.ingredients_div}>
+                {ingredients.filter((ing) => {
+                    console.log("Search : " + search)
+                    if(search == "") {
+                        console.log(ing.name)
+                        return ing;
+                    } else if(ing.name.toLowerCase().startsWith(search.toLowerCase())) {
+                        return ing;
+                    }
+
+                }).map((val, key) => {
+                    return (
+                        <TouchableOpacity style={styles.item} key={key}>
+                            <Image style={styles.image} source={{uri: val.image}}/>
+                            <View style={{alignItems: "center", flexDirection:'row', backgroundColor: "#F5F5F5"}}>
+                                <Text style={styles.flatListTitle}> {val.name} </Text>
+                                <MaterialCommunityIcons name={"plus"} size={50} color={"#209209"}/>
+                            </View>
+                        </TouchableOpacity>
+                    )
+                })}
+            </ScrollView>
 
             <View style={styles.search}>
                 <TouchableOpacity style={styles.button_div}>
@@ -33,112 +61,18 @@ export default function RechercheScreen() {
 );
 }
 
-const Searchbar = () => {
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
-    // let clicked = false
-    // if(!clicked) {
-    return (
-        <View style={styles.container}>
-            <TextInput
-                style={styles.textInput}
-                placeholder={"Entrez le nom de vos ingrédients"}
-                // onPressIn={() => {
-                //     clicked = true
-                // }}
-                // onPressOut={() => {
-                //     clicked = false
-                // }}
-            >
-            </TextInput>
-        </View>
-    )
-    // }
-}
-
-const Item = ({item}) => (
-    <TouchableOpacity style={styles.item}>
-        <Image style={styles.image} source = {{ uri: item.image}}/>
-        <View style={{alignItems: "center", flexDirection:'row', backgroundColor: "#F5F5F5"}}>
-            <Text style={styles.flatListTitle}>{item.ingredient}</Text>
-            <MaterialCommunityIcons name={"plus"} size={50} color={"#209209"}/>
-        </View>
-    </TouchableOpacity>
-);
-
-const App = () => {
-    const [selectedId, setSelectedId] = useState(null);
-
-    const renderItem = ({ item }) => {
-        const backgroundColor = item.id === selectedId ? "#209209" : "#FFFFFF";
-        const color = item.id === selectedId ? 'white' : 'black';
-
-        return (
-            <Item
-                item={item}
-                onPress={() => setSelectedId(item.id)}
-                backgroundColor={{ backgroundColor }}
-                textColor={{ color }}
-            />
-        );
-    };
-
-    return (
-        <SafeAreaView style={styles.container}>
-            <FlatList
-                data={DATA}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-                extraData ={selectedId}
-            />
-        </SafeAreaView>
-    );
-}
-
-const DATA = [
-    {
-        id: '0',
-        image: "https://www.jardiprix.com/images/Image/TOMATE-GREFFEE-FELICIA-POT-DE-1L-300666.jpg",
-        ingredient : "Tomates",
-        categorie : "Fruits",
-        quantite : "5",
-        unite : "kg",
-    },
-    {
-        id: '1',
-        image: "http://www.companionetmoi.com/images/ingredients/carotte.jpg",
-        ingredient : "Carottes",
-        categorie : "Légumes",
-        quantite : "3",
-        unite : "kg",
-    },
-    {
-        id: '2',
-        image: "https://www.academiedugout.fr/images/9582/370-274/ffffff/fotolia_59270770_subscription_xl.jpg?poix=50&poiy=50",
-        ingredient : "Farine",
-        categorie : "Féculents",
-        quantite : "1.5",
-        unite : "kg",
-    },
-];
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
         justifyContent: "flex-start",
         marginTop: 10,
-        
+
     },
     title: {
         textAlign: "center",
         fontSize: 20,
         fontWeight: 'bold',
-    },
-    separator: {
-        marginVertical: 30,
-        height: 1,
-        width: '80%',
     },
     textInput: {
         borderStyle: "solid",

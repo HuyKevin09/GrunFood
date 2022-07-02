@@ -25,17 +25,17 @@ export default function ProfilScreen({navigation} : RootStackScreenProps<'Connex
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
                 <Image source={require("../assets/images/favicon.png")} style={styles.picture}/>
-                <Text style={styles.name}>Prénom Nom</Text>
+                <Text style={styles.name}> {auth.currentUser?.name}</Text>
 
                 <View style={styles.info}>
                     <Text style={styles.titles}>Informations personnelles</Text>
                     <View style={styles.row}>
                         <MaterialCommunityIcons name={"email-outline"} size={30}/>
-                        <Text> Email : {auth.currentUser?.email}</Text>
+                        <Text> Email : {auth.currentUser?.email} </Text>
                     </View>
                     <View style={styles.row}>
                         <MaterialCommunityIcons name={"phone-outline"} size={30}/>
-                        <Text>Numero de telephone</Text>
+                        <Text> {auth.currentUser?.phoneNumber} </Text>
                     </View>
                 </View>
 

@@ -3,100 +3,50 @@ import React from 'react';
 import EditScreenInfo from '../components/EditScreenInfo';
 import {Text, View} from '../components/Themed';
 import {RootTabScreenProps} from '../types';
-import {Feather} from '@expo/vector-icons';
+import {Feather, MaterialCommunityIcons} from '@expo/vector-icons';
 import { useState } from "react";
 import { SafeAreaView, FlatList, StatusBar,TouchableOpacity } from 'react-native';
+import recettes from "../assets/data/recettes.json";
 
 
-export default function RecettesScreen({navigation} : RootTabScreenProps<'Root'>) {
+export default function RecettesScreen() {
+    const [search, setSearch] = useState("")
     return (
         <ScrollView>
             <View style={styles.container}>
-                <Text style={styles.title}>Recettes</Text>
-                <SearchBar></SearchBar>
-                <View style={{width: '100%'}}>
-                    <App></App>
+                <View>
+                    <TextInput
+                        placeholder="Rechercher une recette"
+                        style={styles.textInput}
+                        onChangeText={(search) => setSearch(search)}
+                    />
                 </View>
+
+                <ScrollView style={{width: "100%"}}>
+                    {recettes.filter((recette) => {
+                        console.log("Search : " + search)
+                        if(search == "") {
+                            console.log(recette.title)
+                            return recette;
+                        } else if(recette.title.toLowerCase().includes(search.toLowerCase())) {
+                            return recette;
+                        }
+
+                    }).map((val, key) => {
+                        return (
+                            <TouchableOpacity style={styles.item} key={key}>
+                                <Text style={styles.title2}>{val.title}</Text>
+                                <Text style={styles.title3}>{val.indice_pollution}</Text>
+                                <Image style={styles.image} source = {{uri : val.image}}/>
+                            </TouchableOpacity>
+                        )
+                    })}
+                </ScrollView>
+
             </View>
         </ScrollView>
     );
 }
-
-const SearchBar = () => {
-
-    return (
-        <View style ={styles.searchbar}>
-            <TextInput placeholder="Rechercher une recette" style={{fontSize:20}}/>
-        </View>
-
-    )
-}
-
-const DATA = [
-    {
-        id: '0',
-        image: 'https://img.cuisineaz.com/660x660/2022/02/23/i183013-couscous-marocain.jpeg',
-        indice_pollution: 'Indice de pollution : 15.3',
-        title: 'Coucous avec légumes ',
-    },
-    {
-        id: '1',
-        image: 'https://img.cuisineaz.com/660x660/2013/12/20/i27245-recette-de-fajitas.jpeg',
-        indice_pollution: 'Indice de pollution  : 10.2',
-        title: 'Fajitas aux légumes',
-    },
-    {
-        id: '2',
-        image: 'https://www.academiedugout.fr/images/15619/948-580/fotolia_62611439_subscription_l.jpg?poix=50&poiy=50',
-        indice_pollution: 'Indice de pollution  : 21.4',
-        title: 'Riz au lait',
-    },
-    {
-        id: '3',
-        image: 'https://cdn.pratico-pratiques.com/app/uploads/sites/3/2019/11/27115447/salade-de-fruits.jpg',
-        indice_pollution: 'Indice de pollution  : 9.9',
-        title: 'Salade de fruit',
-    },
-];
-
-const Item = ({ item, backgroundColor, textColor, navigation}) => (
-    <TouchableOpacity style={[styles.item, backgroundColor]} onPress={() => navigation.replace('RecetteIndividuelle')}>
-        <Text style={[styles.title2, textColor]}>{item.title}</Text>
-        <Text style={[styles.title3, textColor]}>{item.indice_pollution}</Text>
-        <Image style={{height: 300, width: 300}} source = {{uri : item.image}}/>
-
-    </TouchableOpacity>
-);
-
-const App = () => {
-    const [selectedId, setSelectedId] = useState(null);
-
-    const renderItem = ({ item }) => {
-        const backgroundColor = item.id === selectedId ? "#ECF9EE" : "#ECF9EE";
-        const color = item.id === selectedId ? 'black' : 'black';
-
-        return (
-            <Item
-                item={item}
-                onPress={() => setSelectedId(item.id)}
-                backgroundColor={{ backgroundColor }}
-                textColor={{ color }}
-            />
-        );
-    };
-
-    return (
-        <SafeAreaView style={styles.container}>
-            <FlatList
-                data={DATA}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-                extraData ={selectedId}
-            />
-        </SafeAreaView>
-    );
-}
-
 
 const styles = StyleSheet.create({
     container: {
@@ -110,10 +60,6 @@ const styles = StyleSheet.create({
     },
     separator: {
         marginVertical: 30,
-        height: 1,
-        width: '80%',
-    },
-    searchbar: {
         backgroundColor: '#F5F3F3',
         width: '90%',
         height: 30,
@@ -121,11 +67,10 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderRadius: 10,
         paddingHorizontal: 10,
-        marginVertical: 10,
     },
 
     item:{
-        backgroundColor: '#f9c2ff',
+        backgroundColor: '#ECF9EE',
         padding: 20,
         marginVertical: 8,
         marginHorizontal: 16,
@@ -133,14 +78,30 @@ const styles = StyleSheet.create({
         borderRadius: 15,
     },
     title2: {
+        textAlign: "center",
         fontSize: 18,
         marginTop:12,
     },
     title3: {
+        textAlign: "center",
         fontSize: 13,
         marginTop:12,
         marginBottom: 13,
     },
-
-
+    textInput: {
+        borderStyle: "solid",
+        borderWidth: 2,
+        borderColor: "#000000",
+        borderRadius: 10,
+        paddingLeft: 30,
+        paddingRight: 30,
+        fontSize: 18,
+        paddingTop: 6,
+        paddingBottom: 6,
+        marginTop: "3%",
+    },
+    image: {
+        width: "100%",
+        height: 300,
+    }
 });

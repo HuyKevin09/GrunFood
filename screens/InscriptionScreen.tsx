@@ -1,10 +1,14 @@
 import React, {useState} from "react";
 import { StyleSheet, TextInput, TouchableOpacity} from 'react-native';
-import {auth, firebase, database} from '../firebase';
+import {auth} from '../firebase';
+import firebase from '../firebase'
+import database from '../firebase'
+
 
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { Text, View, } from '../components/Themed';
 import {MaterialCommunityIcons} from "@expo/vector-icons";
+import {RootStackScreenProps} from "../types";
 
 export default function InscriptionScreen({navigation} : RootStackScreenProps<'Root'>) {
     const [email, setEmail] = useState('')

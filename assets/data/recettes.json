@@ -1,0 +1,26 @@
+[
+  {
+    "id": 0,
+    "image": "https://img.cuisineaz.com/660x660/2022/02/23/i183013-couscous-marocain.jpeg",
+    "indice_pollution": "Indice de pollution : 15.3",
+    "title": "Coucous avec légumes"
+  },
+  {
+    "id": 1,
+    "image": "https://img.cuisineaz.com/660x660/2013/12/20/i27245-recette-de-fajitas.jpeg",
+    "indice_pollution": "Indice de pollution  : 10.2",
+    "title": "Fajitas aux légumes"
+  },
+  {
+    "id": 2,
+    "image": "https://www.academiedugout.fr/images/15619/948-580/fotolia_62611439_subscription_l.jpg?poix=50&poiy=50",
+    "indice_pollution": "Indice de pollution  : 21.4",
+    "title": "Riz au lait"
+  },
+  {
+    "id": 3,
+    "image": "https://cdn.pratico-pratiques.com/app/uploads/sites/3/2019/11/27115447/salade-de-fruits.jpg",
+    "indice_pollution": "Indice de pollution  : 9.9",
+    "title": "Salade de fruit"
+  }
+]

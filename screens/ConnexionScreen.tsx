@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { StyleSheet, TextInput, TouchableOpacity} from 'react-native';
-import {auth, firebase, database} from '../firebase';
+import {auth} from '../firebase';
+import firebase from '../firebase'
+import database from '../firebase'
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { Text, View, } from '../components/Themed';
 import {RootStackScreenProps} from "../types";
@@ -26,13 +28,12 @@ export default function ConnexionScreen({navigation} : RootStackScreenProps<'Roo
                 email,
                 motDePasse)
          .then(() => {;
-             const user = firebase.auth().currentUser;
+             const user = firebase.default.auth().currentUser;
              console.log('Logged in with:', user.email);
          } )
          .catch(error => alert(error.message))
+
     }
-     
-    
 
     return (
         <View style={styles.container}>
