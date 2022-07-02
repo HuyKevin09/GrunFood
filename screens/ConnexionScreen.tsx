@@ -1,18 +1,36 @@
-import React from "react";
+import React, {useState} from "react";
 import { StyleSheet, TextInput, TouchableOpacity} from 'react-native';
-
+import {auth, firebase, database} from '../firebase';
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { Text, View, } from '../components/Themed';
 import {RootStackScreenProps} from "../types";
 
 export default function ConnexionScreen({navigation} : RootStackScreenProps<'Root'>) {
-    const [values, setValues] = React.useState({ email: '', motDePasse: '' });
+   /* const [values, setValues] = React.useState({ email: '', motDePasse: '' });
     const handleChange = (name, value) => {
         setValues({
             ...values,
             [name]: value,
         });
     };
+    */
+    
+    const [email, setEmail] = useState(null)
+    const [motDePasse, setmotDePasse] = useState(null)
+ 
+    const handleSignUp = () => {
+     auth 
+         .createUserWithEmailAndPassword(
+                email,
+                motDePasse)
+         .then(() => {
+             console.log(firebase.auth().currentUser);
+             const user = firebase.auth().currentUser;
+         } )
+         .catch(error => alert(error.message))
+    }
+     
+    
 
     return (
         <View style={styles.container}>
@@ -32,8 +50,9 @@ export default function ConnexionScreen({navigation} : RootStackScreenProps<'Roo
                     <View style={styles.input}>
                         <FontAwesome name="sign-in" size={24} color="green" style={{marginRight: 10,}} />
                         <TextInput
-                            onChangeText={(text) => handleChange('email', text)}
-                            value={values.email}
+                          //  onChangeText={(text) => handleChange('email', text)}
+                            onChangeText={(text) => handleSignUp(text)}
+                            value={email}
                             placeholder="Adresse e-mail"
                         />
                     </View>
@@ -41,14 +60,14 @@ export default function ConnexionScreen({navigation} : RootStackScreenProps<'Roo
                     <View style={styles.input}>
                         <AntDesign name="lock1" size={24} color="green" style={{marginRight: 10,}}/>
                         <TextInput
-                            onChangeText={(text) => handleChange('motDePasse', text)}
-                            value={values.motDePasse}
+                            onChangeText={(text) => handleSignUp(text)}
+                            value={motDePasse}
                             placeholder="Mot de passe"
                         />
                     </View>
 
                     <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttontext } onPress={() => navigation.replace('Root')}> Connexion </Text>
+                        <Text style={styles.buttontext } onPress={handleSignUp}> Connexion </Text>
                     </TouchableOpacity>
 
                     <Text style={styles.text}> Vous n'avez pas encore de compte ? </Text>

@@ -8,7 +8,7 @@ import { useState } from "react";
 import { SafeAreaView, FlatList, StatusBar,TouchableOpacity } from 'react-native';
 
 
-export default function RecettesScreen({navigation} : RootTabScreenProps<'Recettes'>) {
+export default function RecettesScreen({navigation} : RootTabScreenProps<'Root'>) {
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -17,9 +17,6 @@ export default function RecettesScreen({navigation} : RootTabScreenProps<'Recett
                 <View style={{width: '100%'}}>
                     <App></App>
                 </View>
-
-
-
             </View>
         </ScrollView>
     );
@@ -62,8 +59,8 @@ const DATA = [
     },
 ];
 
-const Item = ({ item, onPress, backgroundColor, textColor }) => (
-    <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
+const Item = ({ item, backgroundColor, textColor, navigation}) => (
+    <TouchableOpacity style={[styles.item, backgroundColor]} onPress={() => navigation.replace('RecetteIndividuelle')}>
         <Text style={[styles.title2, textColor]}>{item.title}</Text>
         <Text style={[styles.title3, textColor]}>{item.indice_pollution}</Text>
         <Image style={{height: 300, width: 300}} source = {{uri : item.image}}/>
