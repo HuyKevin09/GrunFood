@@ -1,0 +1,37 @@
+[
+    {
+      "name": "carotte",
+      "image": "http://www.companionetmoi.com/images/ingredients/carotte.jpg",
+      "category": "Fruits",
+      "quantity": "5",
+      "unit": "g"
+    },
+    {
+      "name": "tomate",
+      "image": "https://www.jardiprix.com/images/Image/TOMATE-GREFFEE-FELICIA-POT-DE-1L-300666.jpg",
+      "category": "Fruits",
+      "quantity": "5",
+      "unit": "g"
+    },
+    {
+      "name": "farine",
+      "image": "https://www.academiedugout.fr/images/9582/370-274/ffffff/fotolia_59270770_subscription_xl.jpg?poix=50&poiy=50",
+      "category": "Fruits",
+      "quantity": "5",
+      "unit": "g"
+    },
+    {
+      "name": "farine",
+      "image": "https://www.academiedugout.fr/images/9582/370-274/ffffff/fotolia_59270770_subscription_xl.jpg?poix=50&poiy=50",
+      "category": "Fruits",
+      "quantity": "5",
+      "unit": "g"
+    },
+    {
+      "name": "farine",
+      "image": "https://www.academiedugout.fr/images/9582/370-274/ffffff/fotolia_59270770_subscription_xl.jpg?poix=50&poiy=50",
+      "category": "Fruits",
+      "quantity": "5",
+      "unit": "g"
+    }
+  ]

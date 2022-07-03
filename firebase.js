@@ -5,6 +5,8 @@ import database from 'firebase/database';
 import App from './App';
 import 'firebase/firestore';
 
+import { getFirestore } from "firebase/firestore";
+
 
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from "firebase/app";
@@ -28,6 +30,7 @@ const firebaseConfig = {
 //const app = initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
 
+
 let app;
 
 if (firebase.apps.length === 0){
@@ -37,10 +40,13 @@ else{
     app = firebase.app()
 }
 
-//const db = app.firestore()
-const auth = firebase.auth()
+/*
+const db = app.firestore()
+const auth = firebase.auth()*/
 
-export { auth};
+const auth = firebase.auth()
+const db = firebase.firestore()
+export { auth, db};
 
 //function firebase(){
 //    return <App />
