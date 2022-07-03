@@ -34,6 +34,7 @@ export type RootTabParamList = {
   Recherche: undefined;
   Profil: undefined;
   Connexion: undefined;
+  RecetteIndividuelle: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<

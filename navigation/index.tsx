@@ -167,7 +167,7 @@ function BottomTabNavigator() {
                     tabBarIcon: ({color}) => <TabBarIcon name="heart" color={color}/>,
                     headerLeft: () => (
                         <Pressable
-                            onPress={() => navigation.navigate('Profil')}
+                            onPress={() => navigation.navigate('RecetteIndividuelle')}
                             style={({pressed}) => ({
                                 opacity: pressed ? 0.5 : 1,
                             })}>

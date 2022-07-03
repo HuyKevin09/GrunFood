@@ -1,61 +1,63 @@
 import React from 'react';
-import {StyleSheet, Image, ScrollView} from 'react-native';
+import {StyleSheet, Image, ScrollView, TouchableOpacity} from 'react-native';
 import { SafeAreaView, FlatList, StatusBar } from 'react-native';
 import {Text, View} from '../components/Themed';
 import {FontAwesome, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons';
 import {ColorSchemeName, Pressable} from 'react-native';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+import recettes from "../assets/data/recettes.json"
 
 export default function RecetteIndividuelleScreen() {
     return (
         <ScrollView>
-        <View style={styles.container}>
-            <Image style={{height: 200, width: 360, marginTop: 10,borderRadius: 15}} source = {{uri : 'https://img.cuisineaz.com/660x660/2013/12/20/i27245-recette-de-fajitas.jpeg'}}/>
-        
-            <View style={styles.info2}>
+            <View style={styles.container}>
+                <Image style={{height: 200, width: 360, marginTop: 10,borderRadius: 15}} source = {{uri : 'https://img.cuisineaz.com/660x660/2013/12/20/i27245-recette-de-fajitas.jpeg'}}/>
+
+                <View style={styles.info2}>
                     <Text style={styles.title2}>Couscous aux légumes</Text>
                     <View style={styles.row}>
-                    <Text style = {{textAlign:'center', marginLeft: 30, marginBottom: 3}}> IP : 5 | Prép : 40 min</Text>
+                        <Text style = {{textAlign:'center', marginLeft: 30, marginBottom: 3}}> IP : 5 | Prép : 40 min</Text>
                     </View>
-           </View> 
-            <View>
-                <Text> </Text>
-            
-                <MaterialCommunityIcons
-                  name="heart-circle"
-                  color={'#209209'}
-                  size={25}
-                  style={{position: 'absolute', right:120, marginTop: 4, fontSize: 30}}
-                 />
-                
-                <MaterialCommunityIcons
-                  name="food-fork-drink"
-                  color={'#209209'}
-                  size={25}
-                  style={{position: 'absolute', left:120, marginTop: 4, fontSize: 30}}
-                 />
-            </View>
+                </View>
 
-            <View style={styles.info}>
+                <View>
+                    <TouchableOpacity style={styles.favorites}>
+                        <MaterialCommunityIcons
+                            name="heart-circle"
+                            color={'#209209'}
+                            size={40}
+                        />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.conso}>
+                        <MaterialCommunityIcons
+                            name="food-fork-drink"
+                            color={'#209209'}
+                            size={40}
+                        />
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.info}>
                     <Text style={styles.titles}>Ingrédients</Text>
                     <View style={styles.row}>
-                    <App></App>
+                        <App></App>
                     </View>
-           </View>
-           <View style={styles.info}>
+                </View>
+                <View style={styles.info3}>
                     <Text style={styles.titles}>Préparation</Text>
                     <View style={styles.row}>
-                    <Text>Faire Nkedie efhiehf ueoezbf fzuhuv uzehfuz hdodzbdc chcufizfzibc Faire Nkedie efhiehf ueoezbf fzuhuv uzehfuz hdodzbdc chcufizfzibc</Text>
+                        <Text>Faire Nkedie efhiehf ueoezbf fzuhuv uzehfuz hdodzbdc chcufizfzibc Faire Nkedie efhiehf ueoezbf fzuhuv uzehfuz hdodzbdc chcufizfzibc</Text>
                     </View>
-           </View>
+                </View>
 
-     
 
-        </View>
-        
+
+            </View>
+
         </ScrollView>
-);
+    );
 }
 
 const DATA = [
@@ -77,35 +79,33 @@ const DATA = [
         quantite : "1.5",
         unite : "kg",
     },
-  ];
+];
 
 
 
 
-  const Item = ({ item }) => (
+const Item = ({ item }) => (
     <View style={styles.item}>
-      <Text style={styles.ingredient}>{item.quantite} {item.unite} {item.ingredient}</Text>
-     
+        <Text style={styles.ingredient}>{item.quantite} {item.unite} {item.ingredient}</Text>
+
     </View>
-  );
+);
 
 const App = () => {
     const renderItem = ({ item }) => (
-      <Item item={item} />
+        <Item item={item} />
     );
     return (
         <SafeAreaView style={styles.container}>
-          <FlatList
-            data={DATA}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-          />
+            <FlatList
+                data={DATA}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+            />
         </SafeAreaView>
-      );
-    }
-    
-     
-  
+    );
+}
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: "90%",
         marginBottom: 15,
-        marginTop: 30,
+        marginTop: "15%",
         shadowOffset: {
             height: 4,
             width: 4,
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
     },
     info2: {
-      borderStyle: "solid",
+        borderStyle: "solid",
         borderWidth: 1,
         borderColor: 'white',
         opacity : 0.8,
@@ -149,6 +149,22 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 138,
         marginBottom: 15,
+        shadowOffset: {
+            height: 4,
+            width: 4,
+        },
+        shadowColor: "#000000",
+        shadowRadius: 5,
+        shadowOpacity: 0.3,
+    },
+    info3: {
+        borderStyle: "solid",
+        borderWidth: 1,
+        borderColor: "white",
+        borderRadius: 10,
+        width: "90%",
+        marginBottom: 15,
+        marginTop: "5%",
         shadowOffset: {
             height: 4,
             width: 4,
@@ -182,14 +198,23 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         marginVertical: 8,
         marginHorizontal: 16,
-  
-      },
-      ingredient:{
+    },
+    ingredient:{
         fontSize: 15,
-      },
-      quantite:{
+    },
+    quantite:{
         fontSize: 12,
     },
-
+    conso: {
+        position: 'absolute',
+        left:120,
+        marginTop: 4,
+        fontSize: 30
+    },
+    favorites: {
+        position: 'absolute',
+        right:120,
+        marginTop: 4,
+        fontSize: 30
+    }
 });
-

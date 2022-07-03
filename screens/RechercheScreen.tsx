@@ -7,8 +7,16 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 import createStackNavigator from "react-native-screens/createNativeStackNavigator";
 import RecettesScreen from "./RecettesScreen";
 import ingredients from "../assets/data/ingredients.json"
+import {NavigationContainer} from "@react-navigation/native";
+import ConnexionScreen from "./ConnexionScreen";
+import InscriptionScreen from "./InscriptionScreen";
+import RegimeScreen from "./RegimeScreen";
+import AllergenesScreen from "./AllergenesScreen";
+import RecetteIndividuelleScreen from "./RecetteIndividuelleScreen";
+import ProfilScreen from "./ProfilScreen";
+import * as React from "react";
 
-export default function RechercheScreen() {
+export default function RechercheScreen( {navigation} ) {
     const [search, setSearch] = useState("")
     return (
         <View style={styles.container}>
@@ -24,9 +32,7 @@ export default function RechercheScreen() {
 
             <ScrollView style={styles.ingredients_div}>
                 {ingredients.filter((ing) => {
-                    console.log("Search : " + search)
                     if(search == "") {
-                        console.log(ing.name)
                         return ing;
                     } else if(ing.name.toLowerCase().startsWith(search.toLowerCase())) {
                         return ing;
@@ -46,19 +52,17 @@ export default function RechercheScreen() {
             </ScrollView>
 
             <View style={styles.search}>
-                <TouchableOpacity style={styles.button_div}>
-                    <Text style={styles.button_title}>Rechercher un recette</Text>
+                <TouchableOpacity style={styles.button_div} onPress={() => navigation.navigate("Recettes")}>
+                    <Text style={styles.button_title}>Rechercher une recette</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate("Recettes")}
-                >
+                <TouchableOpacity>
                     <MaterialCommunityIcons name={"upload-outline"} size={40} color={"#209209"} style={styles.upload}/>
                 </TouchableOpacity>
             </View>
 
         </View>
-);
+    );
 }
 
 const styles = StyleSheet.create({
