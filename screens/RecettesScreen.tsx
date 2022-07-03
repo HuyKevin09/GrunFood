@@ -26,18 +26,19 @@ export default function RecettesScreen() {
                     {recettes.filter((recette) => {
                         console.log("Search : " + search)
                         if(search == "") {
-                            console.log(recette.title)
+                            console.log(recette.Nom)
                             return recette;
-                        } else if(recette.title.toLowerCase().includes(search.toLowerCase())) {
+                        } else if(recette.Nom.toLowerCase().includes(search.toLowerCase())) {
                             return recette;
                         }
 
                     }).map((val, key) => {
                         return (
                             <TouchableOpacity style={styles.item} key={key}>
-                                <Text style={styles.title2}>{val.title}</Text>
-                                <Text style={styles.title3}>{val.indice_pollution}</Text>
-                                <Image style={styles.image} source = {{uri : val.image}}/>
+                                <Text style={styles.title2}>{val.Nom}</Text>
+                                <Text style={styles.title3}>IP : {val.Indice}</Text>
+                                <Text style={styles.title2}>Culture : {val.Culture}</Text>
+                                <Image style={styles.image} source = {{uri : val.Image}}/>
                             </TouchableOpacity>
                         )
                     })}
