@@ -2,12 +2,21 @@ import React from 'react';
 import {StyleSheet, Image, ScrollView} from 'react-native';
 import { SafeAreaView, FlatList, StatusBar } from 'react-native';
 import {Text, View} from '../components/Themed';
-import {FontAwesome, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons';
-import {ColorSchemeName, Pressable} from 'react-native';
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+
+import firebase from '../firebase';
+import {db} from '../firebase';
 
 export default function RecetteIndividuelleScreen() {
+
+  const chooseAllergene = () => {
+    console.log('Choix allergene fait');
+    const user = firebase.default.auth().currentUser;
+    const userDocument = db.collection("Preference").doc(user?.uid).update({
+            Allergene: allergene,
+        });
+}
+
     return (
         <ScrollView>
         <View style={styles.container}>

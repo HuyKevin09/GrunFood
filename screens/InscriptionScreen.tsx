@@ -22,7 +22,7 @@ export default function InscriptionScreen({navigation} : RootStackScreenProps<'R
             .then(() => {
                 console.log(' HEY Registered with:', name);
                 const user = firebase.default.auth().currentUser;
-                const userDocument = db.collection("Utilisateur").doc(user.uid).set({
+                const userDocument = db.collection("Utilisateur").doc(user?.uid).set({
                     nom : name,
                     mail : email,
                     mdp : motDePasse,

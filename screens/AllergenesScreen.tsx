@@ -4,19 +4,26 @@ import { Ionicons } from '@expo/vector-icons';
 import { Text, View, } from '../components/Themed';
 import {useState} from "react";
 
+import firebase from '../firebase';
+import {db} from '../firebase';
+
 export default function AllergenesScreen({navigation} : RootStackScreenProps<'Root'>) {
+
+    const chooseAllergene = () => {
+        console.log('Choix allergene fait');
+        const user = firebase.default.auth().currentUser;
+        const userDocument = db.collection("Utilisateur").doc(user?.uid).update({
+                Allergene: allergene,
+            });
+        navigation.replace("Root");
+   }
 
     const [allergene, setAllergene]= useState('')
 
-    /*const handleSelect = (e) => {
-        console.log(e.value)
-        setRegime(e.value)
-       }*/
-    
     const Item = ({ item, onPress}) => (
         <TouchableOpacity onPress={onPress}>
-        <View style={[styles.item, {backgroundColor : item.id === allergene ? "white" : "#f5f5f5"}]}>
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <View style={[styles.item, {backgroundColor : item.title === allergene ? "#209209" : "#f5f5f5"}]}>
+            <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor : item.title === allergene ? "#209209" : "#f5f5f5"}}>
                 <Text>{item.title}</Text>
             </View>
         </View>
@@ -27,13 +34,15 @@ export default function AllergenesScreen({navigation} : RootStackScreenProps<'Ro
         return(
             <Item 
                 item={item}
+                onPress = {() => 
+                    setAllergene(item.title)}
             />
         )
     };
     
     return (
         <ScrollView style={styles.scrollview}>
-            <TouchableOpacity style = {{alignItems: 'flex-end', position: 'absolute', width: "100%", marginTop: 45, paddingRight: 15,}} onPress={() => navigation.replace('Root')}>
+            <TouchableOpacity style = {{alignItems: 'flex-end', position: 'absolute', width: "100%", marginTop: 45, paddingRight: 15,}} onPress={chooseAllergene}>
                 <Ionicons name="md-checkmark-circle-outline" size={40} color="green"/>
             </TouchableOpacity>
             <View style = {styles.text}>

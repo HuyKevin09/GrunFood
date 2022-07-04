@@ -4,14 +4,32 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import {Text, View} from '../components/Themed';
 import {RootTabScreenProps} from '../types';
 import {Feather, MaterialCommunityIcons} from '@expo/vector-icons';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SafeAreaView, FlatList, StatusBar,TouchableOpacity } from 'react-native';
 import recettes from "../assets/data/recettes.json";
 import Navigation from '../navigation';
 
+import {db} from '../firebase';
 
 export default function RecettesScreen({navigation}) {
     const [search, setSearch] = useState("")
+    
+
+    const [recettes, setRecettes] = useState([])
+
+    const fetchBlogs=async()=>{
+        const response=db.collection('Recette');
+        const data=await response.get();
+        data.docs.forEach(recette => {
+            setRecettes([...recettes,recette.data()])
+            console.log(recette.data())
+        })
+    }
+
+    useEffect(() => {
+        fetchBlogs();
+    }, [])
+
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -24,10 +42,8 @@ export default function RecettesScreen({navigation}) {
                 </View>
 
                 <ScrollView style={{width: "100%"}}>
-                    {recettes.filter((recette) => {
-                        console.log("Search : " + search)
+                    {/* {recettes.filter((recette) => {
                         if(search == "") {
-                            console.log(recette.Nom)
                             return recette;
                         } else if(recette.Nom.toLowerCase().includes(search.toLowerCase())) {
                             return recette;
@@ -40,6 +56,17 @@ export default function RecettesScreen({navigation}) {
                                 <Text style={styles.title3}>IP : {val.Indice}</Text>
                                 <Text style={styles.title2}>Culture : {val.Culture}</Text>
                                 <Image style={styles.image} source = {{uri : val.Image}}/>
+                            </TouchableOpacity>
+                        )
+                    })} */}
+                    {
+                    recettes && recettes.map(recette=>{
+                        return(
+                            <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("RecetteIndividuelle")}>
+                                <Text style={styles.title2}>{recette.Nom_recette}</Text>
+                                <Text style={styles.title3}>Score Pollution : {recette.indice_de_pollution}</Text>
+                                <Text style={styles.title2}>Culture : {recette.culture}</Text>
+                                <Image style={styles.image} source = {{uri : recette.Image}}/>
                             </TouchableOpacity>
                         )
                     })}

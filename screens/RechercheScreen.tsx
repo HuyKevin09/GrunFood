@@ -24,9 +24,7 @@ export default function RechercheScreen({navigation}) {
 
             <ScrollView style={styles.ingredients_div}>
                 {ingredients.filter((ing) => {
-                    console.log("Search : " + search)
                     if(search == "") {
-                        console.log(ing.name)
                         return ing;
                     } else if(ing.name.toLowerCase().startsWith(search.toLowerCase())) {
                         return ing;

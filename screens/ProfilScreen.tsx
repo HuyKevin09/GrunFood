@@ -7,8 +7,9 @@ import DropDownPicker from "react-native-dropdown-picker";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {RootStackScreenProps} from "../types";
 
-import React from 'react';
-import {auth} from '../firebase';
+import React, {useEffect} from 'react';
+import {auth, db} from '../firebase';
+import firebase from '../firebase';
 import { useNavigation } from '@react-navigation/native';
 
 export default function ProfilScreen({navigation} : RootStackScreenProps<'Connexion'>) {
@@ -21,11 +22,27 @@ export default function ProfilScreen({navigation} : RootStackScreenProps<'Connex
             })
     }
     
+    const user = firebase.default.auth().currentUser;
+    const userDocument = db.collection("Utilisateur").doc(user?.uid)
+    const [userDetails, setUserDetails] = useState('')
+    // console.log(userDocument)
+    const fetchBlogs=async()=>{
+        const response =await userDocument
+        const name = response.get().then(snapshot => setUserDetails(snapshot.data()))
+        console.log(userDetails)
+        
+        // console.log(name.doc(user?.uid).data["nom"])
+    }
+
+    useEffect(() => {
+        fetchBlogs();
+    }, [])
+
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
                 <Image source={require("../assets/images/favicon.png")} style={styles.picture}/>
-                <Text style={styles.name}>Nom: {auth.currentUser?.displayName}</Text>
+                <Text style={styles.name}>{userDetails["nom"]}</Text>
 
                 <View style={styles.info}>
                     <Text style={styles.titles}>Informations personnelles</Text>
@@ -35,7 +52,7 @@ export default function ProfilScreen({navigation} : RootStackScreenProps<'Connex
                     </View>
                     <View style={styles.row}>
                         <MaterialCommunityIcons name={"phone-outline"} size={30}/>
-                        <Text>Numero de telephone : </Text>
+                        <Text>Numero de telephone : {userDetails["num_telephone"]} </Text>
                     </View>
                 </View>
 
@@ -45,14 +62,14 @@ export default function ProfilScreen({navigation} : RootStackScreenProps<'Connex
                         <MaterialCommunityIcons name={"silverware-fork-knife"} size={30}/>
                         <View style={styles.col}>
                             <Text>Allergènes</Text>
-                            <Text>Liste des allergènes</Text>
+                            <Text>{userDetails["Allergene"]}</Text>
                         </View>
                     </View>
                     <View style={styles.row}>
                         <MaterialCommunityIcons name={"noodles"} size={30}/>
                         <View style={styles.col}>
                             <Text>Régime</Text>
-                            <Text>Type d'alimentation (vegan, vegetarien, ...)</Text>
+                            <Text>{userDetails["regime_alimentaire"]}</Text>
                         </View>
                     </View>
                 </View>

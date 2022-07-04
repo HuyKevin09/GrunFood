@@ -4,15 +4,14 @@ import DropDownPicker from "react-native-dropdown-picker";
 import {useState} from "react";
 
 import firebase from '../firebase';
-import {auth, db} from '../firebase';
+import {db} from '../firebase';
 
 export default function RegimeScreen({navigation} : RootStackScreenProps<'Root'>) {
 
     const chooseRegime = () => {
             console.log('Choix de régime fait');
             const user = firebase.default.auth().currentUser;
-            const userDocument = db.collection("Preference").doc(user?.uid).set({
-                    ID_utilisateur : user?.email,
+            const userDocument = db.collection("Utilisateur").doc(user?.uid).update({
                     regime_alimentaire: regime,
                 });
             navigation.replace("Allergenes");
