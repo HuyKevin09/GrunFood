@@ -1,8 +1,7 @@
 import {FlatList, ScrollView, StyleSheet, TextInput, TouchableOpacity, Image, SafeAreaView} from 'react-native';
-
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
-import {Component, useState} from "react";
+import {Component, useState, useEffect} from "react";
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import createStackNavigator from "react-native-screens/createNativeStackNavigator";
 import RecettesScreen from "./RecettesScreen";
@@ -15,9 +14,25 @@ import AllergenesScreen from "./AllergenesScreen";
 import RecetteIndividuelleScreen from "./RecetteIndividuelleScreen";
 import ProfilScreen from "./ProfilScreen";
 import * as React from "react";
+import vision from "@react-native-firebase/ml-vision"
+import ml from "@react-native-firebase/ml"
+import {CameraOptions, launchCamera, launchImageLibrary} from "react-native-image-picker";
+import {any} from "@tensorflow/tfjs";
+import {NativeEventEmitter} from "react-native";
+import db from '../firebase';
+
 
 export default function RechercheScreen( {navigation} ) {
     const [search, setSearch] = useState("")
+    const [recettes, setRecettes]=useState([])
+    const fetchBlogs=async()=>{
+        const response=db.collection("Recettes")
+        const data=await response.get();
+        data.docs.forEach(item=>{
+            setBlogs([...blogs,item.data()])
+        })
+    }
+
     return (
         <View style={styles.container}>
 
@@ -60,6 +75,7 @@ export default function RechercheScreen( {navigation} ) {
                     <MaterialCommunityIcons name={"upload-outline"} size={40} color={"#209209"} style={styles.upload}/>
                 </TouchableOpacity>
             </View>
+
 
         </View>
     );

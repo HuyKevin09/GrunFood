@@ -24,7 +24,6 @@ export default function RecettesScreen( {navigation} ) {
 
                 <ScrollView style={{width: "100%"}}>
                     {recettes.filter((recette) => {
-                        console.log(this)
                         if(search == "") {
                             return recette;
                         } else if(recette.Nom.toLowerCase().includes(search.toLowerCase())) {

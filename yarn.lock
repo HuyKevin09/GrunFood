@@ -2218,6 +2218,11 @@
     "opencollective-postinstall" "^2.0.1"
     "superstruct" "^0.6.2"
 
+"@react-native-firebase/ml-vision@^7.4.13":
+  "integrity" "sha512-d2MbgXFDEMOJZGxkdICyL951le6NJirIjviYvVYAU6KqGRN46PmH2BqTA8MH9iUCDkrD/zMIRmbPJPpDVkDCeg=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/ml-vision/-/ml-vision-7.4.13.tgz"
+  "version" "7.4.13"
+
 "@react-native-firebase/ml@^15.1.1":
   "integrity" "sha512-SbHRf1r2OhWcvsYQUeaexrocJcZ7DlY2V9Zpe6g6Ws02DutNzQDkzDaObTUpReKVIEADFa5z6F0ZBStfQEzW0g=="
   "resolved" "https://registry.npmjs.org/@react-native-firebase/ml/-/ml-15.1.1.tgz"

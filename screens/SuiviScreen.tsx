@@ -10,9 +10,21 @@ import { AntDesign } from '@expo/vector-icons'
 
 import feed from '../assets/data/feed'
 
+import {db} from '../firebase';
+import React,{useState,useEffect} from 'react';
+
 export default function SuiviScreen() {
-
-
+    const [recettes, setRecettes] = useState([])
+    const fetchBlogs=async()=>{
+        const response=db.collection('Recette');
+        const data=await response.get();
+        data.docs.forEach(item => {
+            setRecettes([...recettes,item.data()])
+        })
+    }
+    useEffect(() => {
+        fetchBlogs();
+    }, [])
     return (
 
         <ScrollView style={styles.scrollView}>
@@ -48,26 +60,31 @@ export default function SuiviScreen() {
             </View>
 
             <View>
-                <FlatList
-                    data={DATA}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id}
-                />
+                {
+                    recettes && recettes.map(recette=>{
+                        return(
+                            // <View>
+                            //     <Text>{recette["Nom_recette"]}</Text>
+                            //     <Text>{recette["ID"]}</Text>
+                            //     <Text>{recette["culture"]}</Text>
+                            //     <Text>{recette["indice_de_pollution"]}</Text>
+                            //     <Text>{recette["ingredients"]}</Text>
+                            //     <Image style={styles.image} source={{uri : recette["Image"]}}/>
+                            // </View>
+                            <View style={styles.item}>
+                                <Image style={styles.image} source = {{uri : recette["Image"]}}/>
+                                <View style={{alignItems: 'center', justifyContent: 'center', flexDirection:'column', backgroundColor: "#f5f5f5"}}>
+                                    <Text style={styles.flatListTitle}>{recette["Nom_recette"]}</Text>
+                                    <Text style={styles.quantite}> IP : {recette["indice_de_pollution"]} </Text>
+                                </View>
+                            </View>
+                        )
+                    })
+                }
             </View>
         </ScrollView>
     );
 }
-
-
-{/* <Item title={item.title} /> */}
-
-const renderItem = ({ item }) => {
-    return(
-        <Item
-            item={item}
-        />
-    )
-};
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -108,43 +125,6 @@ const Date = () => {
 }
 
 
-const DATA = [
-    {
-        id: '0',
-        image: "https://www.jardiprix.com/images/Image/TOMATE-GREFFEE-FELICIA-POT-DE-1L-300666.jpg",
-        ingredient : "Tomates",
-        categorie : "Fruits",
-        quantite : "5",
-        unite : "kg",
-    },
-    {
-        id: '1',
-        image: "http://www.companionetmoi.com/images/ingredients/carotte.jpg",
-        ingredient : "Carottes",
-        categorie : "Légumes",
-        quantite : "3",
-        unite : "kg",
-    },
-    {
-        id: '2',
-        image: "https://www.academiedugout.fr/images/9582/370-274/ffffff/fotolia_59270770_subscription_xl.jpg?poix=50&poiy=50",
-        ingredient : "Farine",
-        categorie : "Féculents",
-        quantite : "1.5",
-        unite : "kg",
-    },
-];
-
-
-const Item = ({ item}) => (
-    <View style={styles.item}>
-        <Image style={styles.image} source = {{ uri: item.image}}/>
-        <View style={{alignItems: 'center', justifyContent: 'center', flexDirection:'column', backgroundColor: "#f5f5f5"}}>
-            <Text style={styles.flatlisttitle}>{item.ingredient}</Text>
-            <Text style={styles.quantite}> Quantité : {item.quantite} {item.unite}</Text>
-        </View>
-    </View>
-);
 
 
 const styles = StyleSheet.create({
@@ -211,14 +191,16 @@ const styles = StyleSheet.create({
     item: {
         backgroundColor: "#f5f5f5",
         padding: 20,
+        flex: 1,
         marginVertical: 8,
         marginHorizontal: 16,
         borderRadius: 15,
         flexDirection: 'row',
+        justifyContent: "space-between",
     },
-    flatlisttitle: {
+    flatListTitle: {
         fontSize: 20,
-        marginLeft: 60,
+        textAlign: "center",
     },
     image : {
         height: 100,
