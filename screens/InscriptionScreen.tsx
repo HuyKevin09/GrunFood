@@ -3,12 +3,10 @@ import { StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import {auth, db} from '../firebase';
 import firebase from '../firebase';
 
-import { FontAwesome, AntDesign } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { Text, View, } from '../components/Themed';
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import { dismissBrowser } from "expo-web-browser";
-import {collection,doc, getDoc} from "firebase/firestore"
-import { getFirestore } from "firebase/firestore"
 
 export default function InscriptionScreen({navigation} : RootStackScreenProps<'Root'>) {
     const [email, setEmail] = useState('')
@@ -30,27 +28,11 @@ export default function InscriptionScreen({navigation} : RootStackScreenProps<'R
                     mdp : motDePasse,
                     num_telephone : telephone
                 });
-                /*
-                db.collection('Utilisateur').doc(user.uid).add({
-                    Nom : name,
-                    mail : user.email,
-                    mdp : user.motDePasse,
-                    num_telephone : telephone,
-                });*/
                 navigation.replace("Regime");
             } )
             .catch(error => alert(error.message))
        }
-    
-    // temporaire
-    /*const usersCollection = db.collection("Utilisateur");
-    useEffect( () => {
-        const getUsers = async () => {
-            const data = await getDoc(usersCollection)
-            console.log(data)
-        }
-        getUsers()
-    }, [])*/
+
 
     return (
         <View style={styles.container}>
@@ -111,18 +93,6 @@ export default function InscriptionScreen({navigation} : RootStackScreenProps<'R
         </View>
     );
 }
-
-// onPress={() => navigation.replace('Regime')}
-
-/*<View style={styles.input}>
-                        <AntDesign name="lock1" size={18} color="green" style={{marginRight: 10,}}/>
-                        <TextInput
-                            onChangeText={(text) => handleChange('confMdp', text)}
-                            value={values.confMdp}
-                            placeholder="Confirmer le mot de passe"
-                        />
-                    </View>
-*/
 
 const styles = StyleSheet.create({
     container : {

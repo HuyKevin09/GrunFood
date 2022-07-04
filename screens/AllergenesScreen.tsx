@@ -2,9 +2,35 @@ import { StyleSheet,StatusBar, Button, TouchableOpacity, FlatList,ScrollView,} f
 
 import { Ionicons } from '@expo/vector-icons'; 
 import { Text, View, } from '../components/Themed';
-
+import {useState} from "react";
 
 export default function AllergenesScreen({navigation} : RootStackScreenProps<'Root'>) {
+
+    const [allergene, setAllergene]= useState('')
+
+    /*const handleSelect = (e) => {
+        console.log(e.value)
+        setRegime(e.value)
+       }*/
+    
+    const Item = ({ item, onPress}) => (
+        <TouchableOpacity onPress={onPress}>
+        <View style={[styles.item, {backgroundColor : item.id === allergene ? "white" : "#f5f5f5"}]}>
+            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <Text>{item.title}</Text>
+            </View>
+        </View>
+        </TouchableOpacity>
+      );
+    
+    const renderItem = ({ item }) => {
+        return(
+            <Item 
+                item={item}
+            />
+        )
+    };
+    
     return (
         <ScrollView style={styles.scrollview}>
             <TouchableOpacity style = {{alignItems: 'flex-end', position: 'absolute', width: "100%", marginTop: 45, paddingRight: 15,}} onPress={() => navigation.replace('Root')}>
@@ -20,67 +46,60 @@ export default function AllergenesScreen({navigation} : RootStackScreenProps<'Ro
                     data={DATA}
                     renderItem={renderItem}
                     keyExtractor={item => item.id}
+                    extraData={setAllergene}
                 />
             </View>
         </ScrollView>
 );
 }
 
-const renderItem = ({ item }) => {
-    return(
-        <Item 
-            item={item}
-        />
-    )
-};
-
 const DATA = [
     {
         id: '0',
         title :'Arachide',
+        selected : false,
     },
     {
         id: '1',
         title:'Céleri',
+        selected : false,
     },
     {
         id: '2',
         title : 'Céréales',
+        selected : false,
     },
     {
         id: '3',
-        title : 'Céréales',
+        title : 'Lactose',
+        selected : false,
     },{
         id: '4',
         title : 'Céréales',
+        selected : false,
     },{
         id: '5',
         title : 'Céréales',
+        selected : false,
     },{
         id: '6',
         title : 'Céréales',
+        selected : false,
     },{
         id: '7',
         title : 'Céréales',
+        selected : false,
     },{
         id: '8',
         title : 'Céréales',
+        selected : false,
     },{
         id: '9',
         title : 'Céréales',
+        selected : false,
     },
   ];
 
-
-  const Item = ({ item}) => (
-    <TouchableOpacity>
-    <View style={styles.item}>
-        <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: "#f5f5f5"}}>
-            <Text>{item.title}</Text>
-        </View>
-    </View>
-    </TouchableOpacity>
-  );
 
 
 const styles = StyleSheet.create({
@@ -92,13 +111,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'relative',
     },
-    // temporaire
-    /*
-    prefAndCheck : {
-        flexDirection: 'row',
-        width: "100%",
-        marginTop: 30, 
-    },*/
     container: {
         flex: 1,
     },
