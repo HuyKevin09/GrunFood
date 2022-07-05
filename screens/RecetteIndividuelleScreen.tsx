@@ -7,7 +7,7 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 import firebase from '../firebase';
 import {db} from '../firebase';
 
-export default function RecetteIndividuelleScreen() {
+export default function RecetteIndividuelleScreen({route}) {
 
   const chooseAllergene = () => {
     console.log('Choix allergene fait');
@@ -17,17 +17,17 @@ export default function RecetteIndividuelleScreen() {
         });
 }
 
-    return (
-        <ScrollView>
-        <View style={styles.container}>
-            <Image style={{height: 200, width: 360, marginTop: 10,borderRadius: 15}} source = {{uri : 'https://img.cuisineaz.com/660x660/2013/12/20/i27245-recette-de-fajitas.jpeg'}}/>
-        
-            <View style={styles.info2}>
-                    <Text style={styles.title2}>Couscous aux légumes</Text>
-                    <View style={styles.row}>
-                    <Text style = {{textAlign:'center', marginLeft: 30, marginBottom: 3}}> IP : 5 | Prép : 40 min</Text>
-                    </View>
-           </View> 
+return (
+  <ScrollView>
+          <View style={styles.container}>
+              <Image style={styles.image} source = {{uri : route.params.Image}}/>
+
+              <View style={styles.info2}>
+                      <Text style={styles.title2}> {route.params.nom} </Text>
+                      <View style={styles.row}>
+                          <Text style = {styles.pollution}> Score pollution : {route.params.pollution} | Prép : {route.params.temps}</Text>
+                      </View>
+            </View>
             <View>
                 <Text> </Text>
             
@@ -199,6 +199,16 @@ const styles = StyleSheet.create({
       quantite:{
         fontSize: 12,
     },
-
+    pollution: {
+      textAlign:'center',
+      marginLeft: 30,
+      marginBottom: 3
+    },
+    image: {
+        height: 200,
+        width: 360,
+        marginTop: 10,
+        borderRadius: 15
+    },
 });
 

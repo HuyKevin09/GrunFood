@@ -20,16 +20,16 @@ export default function SuiviScreen() {
         const response=db.collection('Recette');
         const data=await response.get();
         data.docs.forEach(recette => {
-            setRecettes([...recettes,recette.data()])
-            const fetchBlogs2=async()=>{
-                const response2 = response.doc(recette.id).collection('ingredient')
-                const data2 = await response2.get() 
-                //console.log(data2.docs)
-                data2.docs.forEach(ingredient => {
-                    console.log(ingredient.data())
-                })
-            }
-            fetchBlogs2()
+            setRecettes(recettes => [...recettes,recette.data()])
+            // const fetchBlogs2=async()=>{
+            //     const response2 = response.doc(recette.id).collection('ingredient')
+            //     const data2 = await response2.get() 
+            //     //console.log(data2.docs)
+            //     data2.docs.forEach(ingredient => {
+            //         console.log(ingredient.data())
+            //     })
+            // }
+            // fetchBlogs2()
         }
         )
     }
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
     },
     flatListTitle: {
-        fontSize: 20,
+        fontSize: 15,
         textAlign: "center",
     },
     image : {

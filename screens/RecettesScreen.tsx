@@ -6,23 +6,22 @@ import {RootTabScreenProps} from '../types';
 import {Feather, MaterialCommunityIcons} from '@expo/vector-icons';
 import { useState, useEffect } from "react";
 import { SafeAreaView, FlatList, StatusBar,TouchableOpacity } from 'react-native';
-import recettes from "../assets/data/recettes.json";
+import recettesJson from "../assets/data/recettes.json";
 import Navigation from '../navigation';
 
 import {db} from '../firebase';
 
 export default function RecettesScreen({navigation}) {
     const [search, setSearch] = useState("")
-    
 
-    const [recettes, setRecettes] = useState([])
-
+    const [recettes, setRecettes] = useState([]) 
+    const [selectedRecette, setselectedRecette] = useState([])
+ 
     const fetchBlogs=async()=>{
         const response=db.collection('Recette');
         const data=await response.get();
         data.docs.forEach(recette => {
-            setRecettes([...recettes,recette.data()])
-            console.log(recette.data())
+            setRecettes(recettes => [...recettes,recette.data()])
         })
     }
 
@@ -42,27 +41,21 @@ export default function RecettesScreen({navigation}) {
                 </View>
 
                 <ScrollView style={{width: "100%"}}>
-                    {/* {recettes.filter((recette) => {
-                        if(search == "") {
-                            return recette;
-                        } else if(recette.Nom.toLowerCase().includes(search.toLowerCase())) {
-                            return recette;
-                        }
-
-                    }).map((val, key) => {
-                        return (
-                            <TouchableOpacity style={styles.item} key={key} onPress={() => navigation.navigate("RecetteIndividuelle")}>
-                                <Text style={styles.title2}>{val.Nom}</Text>
-                                <Text style={styles.title3}>IP : {val.Indice}</Text>
-                                <Text style={styles.title2}>Culture : {val.Culture}</Text>
-                                <Image style={styles.image} source = {{uri : val.Image}}/>
-                            </TouchableOpacity>
-                        )
-                    })} */}
                     {
-                    recettes && recettes.map(recette=>{
+                    recettes && recettes.map((recette, key) =>{
+                        // console.log(recettes)
                         return(
-                            <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("RecetteIndividuelle")}>
+                            <TouchableOpacity key={key} style={styles.item} onPress={() => navigation.navigate(
+                                {
+                                    name: "RecetteIndividuelle",
+                                    params: {
+                                        nom: recette.Nom_recette,
+                                        pollution: recette.indice_de_pollution,
+                                        culture: recette.culture,
+                                        temps: recette.temps_preparation,
+                                        image: recette.Image,
+                                    }
+                                })}>
                                 <Text style={styles.title2}>{recette.Nom_recette}</Text>
                                 <Text style={styles.title3}>Score Pollution : {recette.indice_de_pollution}</Text>
                                 <Text style={styles.title2}>Culture : {recette.culture}</Text>
