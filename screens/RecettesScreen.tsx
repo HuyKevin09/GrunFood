@@ -14,9 +14,8 @@ import {db} from '../firebase';
 export default function RecettesScreen({navigation}) {
     const [search, setSearch] = useState("")
 
-    const [recettes, setRecettes] = useState([]) 
-    const [selectedRecette, setselectedRecette] = useState([])
- 
+    const [recettes, setRecettes] = useState([])
+
     const fetchBlogs=async()=>{
         const response=db.collection('Recette');
         const data=await response.get();
@@ -42,19 +41,22 @@ export default function RecettesScreen({navigation}) {
 
                 <ScrollView style={{width: "100%"}}>
                     {
-                    recettes && recettes.map((recette, key) =>{
+                    recettes && recettes.filter((recette) => {
+                        if(search == "") {
+                            return recette;
+                        } else if(recette.Nom_recette.toLowerCase().startsWith(search.toLowerCase())) {
+                            return recette;
+                        } else if(recette.culture.toLowerCase().startsWith(search.toLowerCase())) {
+                            return recette;
+                        }
+                    })
+                        .map((recette, key) =>{
                         // console.log(recettes)
                         return(
                             <TouchableOpacity key={key} style={styles.item} onPress={() => navigation.navigate(
                                 {
                                     name: "RecetteIndividuelle",
-                                    params: {
-                                        nom: recette.Nom_recette,
-                                        pollution: recette.indice_de_pollution,
-                                        culture: recette.culture,
-                                        temps: recette.temps_preparation,
-                                        image: recette.Image,
-                                    }
+                                    params: recette
                                 })}>
                                 <Text style={styles.title2}>{recette.Nom_recette}</Text>
                                 <Text style={styles.title3}>Score Pollution : {recette.indice_de_pollution}</Text>

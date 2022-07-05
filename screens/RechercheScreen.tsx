@@ -29,7 +29,6 @@ export default function RechercheScreen({navigation}) {
                     } else if(ing.name.toLowerCase().startsWith(search.toLowerCase())) {
                         return ing;
                     }
-
                 }).map((val, key) => {
                     return (
                         <TouchableOpacity style={styles.item} key={key}>

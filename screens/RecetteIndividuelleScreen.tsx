@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Image, ScrollView} from 'react-native';
+import {StyleSheet, Image, ScrollView, TouchableOpacity} from 'react-native';
 import { SafeAreaView, FlatList, StatusBar } from 'react-native';
 import {Text, View} from '../components/Themed';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
@@ -22,42 +22,53 @@ return (
           <View style={styles.container}>
               <Image style={styles.image} source = {{uri : route.params.Image}}/>
 
-              <View style={styles.info2}>
-                      <Text style={styles.title2}> {route.params.nom} </Text>
-                      <View style={styles.row}>
-                          <Text style = {styles.pollution}> Score pollution : {route.params.pollution} | Prép : {route.params.temps}</Text>
+                <View style={styles.info2}>
+                      <Text style={styles.title2}> {route.params.Nom_recette} </Text>
+                      <View style={styles.row1}>
+                          <Text style = {styles.pollu}>IP : {route.params.indice_de_pollution}</Text>
+                          <Text style = {styles.pollu}>Temps : {route.params.temps_preparation}</Text>
                       </View>
-            </View>
-            <View>
-                <Text> </Text>
-            
-                <MaterialCommunityIcons
-                  name="heart-circle"
-                  color={'#209209'}
-                  size={25}
-                  style={{position: 'absolute', right:120, marginTop: 4, fontSize: 30}}
-                 />
-                
-                <MaterialCommunityIcons
-                  name="food-fork-drink"
-                  color={'#209209'}
-                  size={25}
-                  style={{position: 'absolute', left:120, marginTop: 4, fontSize: 30}}
-                 />
-            </View>
+                </View>
 
-            <View style={styles.info}>
-                    <Text style={styles.titles}>Ingrédients</Text>
-                    <View style={styles.row}>
-                    <App></App>
-                    </View>
-           </View>
-           <View style={styles.info}>
-                    <Text style={styles.titles}>Préparation</Text>
-                    <View style={styles.row}>
-                    <Text>Faire Nkedie efhiehf ueoezbf fzuhuv uzehfuz hdodzbdc chcufizfzibc Faire Nkedie efhiehf ueoezbf fzuhuv uzehfuz hdodzbdc chcufizfzibc</Text>
-                    </View>
-           </View>
+                <View>
+                    <TouchableOpacity style = {styles.icon1}>
+                        <MaterialCommunityIcons
+                            name="heart-circle"
+                            color={'#209209'}
+                            size={54}
+                        />
+                    </TouchableOpacity>
+
+
+                    <TouchableOpacity style ={styles.icon2} onPress={() => {
+                        const user = firebase.default.auth().currentUser;
+                        const userDocument = db.collection("HistoriqueHebd").doc(user?.uid).collection("Recette").add({
+                            date: new Date(),
+                            image_recette: route.params.Image,
+                            indice_de_pollution: route.params.indice_de_pollution,
+                            nom_recette: route.params.Nom_recette,
+                        })
+                    }}>
+                        <MaterialCommunityIcons
+                            name="food-fork-drink"
+                            color={'#FFFFFF'}
+                            size={40}
+                        />
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.info}>
+                        <Text style={styles.titles}>Ingrédients</Text>
+                        <View style={styles.row}>
+                        <App></App>
+                        </View>
+               </View>
+               <View style={styles.info3}>
+                        <Text style={styles.titles}>Préparation</Text>
+                        <View style={styles.row}>
+                        <Text>Faire Nkedie efhiehf ueoezbf fzuhuv uzehfuz hdodzbdc chcufizfzibc Faire Nkedie efhiehf ueoezbf fzuhuv uzehfuz hdodzbdc chcufizfzibc</Text>
+                        </View>
+               </View>
 
      
 
@@ -139,7 +150,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: "90%",
         marginBottom: 15,
-        marginTop: 30,
+        marginTop: "15%",
         shadowOffset: {
             height: 4,
             width: 4,
@@ -158,6 +169,22 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 138,
         marginBottom: 15,
+        shadowOffset: {
+            height: 4,
+            width: 4,
+        },
+        shadowColor: "#000000",
+        shadowRadius: 5,
+        shadowOpacity: 0.3,
+    },
+    info3: {
+        borderStyle: "solid",
+        borderWidth: 1,
+        borderColor: "white",
+        borderRadius: 10,
+        width: "90%",
+        marginBottom: 15,
+        marginTop: "5%",
         shadowOffset: {
             height: 4,
             width: 4,
@@ -187,6 +214,12 @@ const styles = StyleSheet.create({
         marginLeft: 8,
         marginBottom: 5,
     },
+    row1: {
+        flexDirection: "column",
+        alignItems: "center",
+        marginBottom: 5,
+        justifyContent: "center",
+    },
     item: {
         backgroundColor: 'white',
         marginVertical: 8,
@@ -199,16 +232,32 @@ const styles = StyleSheet.create({
       quantite:{
         fontSize: 12,
     },
-    pollution: {
-      textAlign:'center',
-      marginLeft: 30,
-      marginBottom: 3
+    pollu: {
+      // textAlign:'center',
+      // marginLeft: 30,
+      marginBottom: 3,
+        fontWeight: "bold",
     },
     image: {
         height: 200,
         width: 360,
         marginTop: 10,
         borderRadius: 15
+    },
+    icon1: {
+        position: 'absolute',
+        right:120,
+        marginTop: 4,
+        // fontSize: 30,
+    },
+    icon2: {
+        position: 'absolute',
+        left:120,
+        marginTop: 4,
+        fontSize: 30,
+        backgroundColor: "#209209",
+        borderRadius: 100,
+        padding: 4,
     },
 });
 

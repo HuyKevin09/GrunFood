@@ -17,13 +17,13 @@ export default function SuiviScreen() {
     const [recettes, setRecettes] = useState([])
 
     const fetchBlogs=async()=>{
-        const response=db.collection('Recette');
+        const response=db.collection('HistoriqueHebd');
         const data=await response.get();
         data.docs.forEach(recette => {
             setRecettes(recettes => [...recettes,recette.data()])
             // const fetchBlogs2=async()=>{
             //     const response2 = response.doc(recette.id).collection('ingredient')
-            //     const data2 = await response2.get() 
+            //     const data2 = await response2.get()
             //     //console.log(data2.docs)
             //     data2.docs.forEach(ingredient => {
             //         console.log(ingredient.data())
@@ -85,9 +85,9 @@ export default function SuiviScreen() {
                             //     <Image style={styles.image} source={{uri : recette["Image"]}}/>
                             // </View>
                             <View style={styles.item}>
-                                <Image style={styles.image} source = {{uri : recette["Image"]}}/>
-                                <View style={{alignItems: 'center', justifyContent: 'center', flexDirection:'column', backgroundColor: "#f5f5f5"}}>
-                                    <Text style={styles.flatListTitle}>{recette["Nom_recette"]}</Text>
+                                <Image style={styles.image} source = {{uri : recette["image_recette"]}}/>
+                                <View style={styles.stats}>
+                                    <Text style={styles.flatListTitle}>{recette["nom_recette"]}</Text>
                                     <Text style={styles.quantite}> IP : {recette["indice_de_pollution"]} </Text>
                                 </View>
                             </View>
@@ -223,5 +223,11 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginLeft: 60,
         marginTop:5,
-    }
+    },
+    stats: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection:'column',
+        backgroundColor: "#f5f5f5"
+    },
 });
