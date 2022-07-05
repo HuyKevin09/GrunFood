@@ -75,28 +75,28 @@ const DATA = [
     },
     {
         id: '2',
-        title : 'Céréales',
+        title : 'Fruits à coques',
         selected : false,
     },
     {
         id: '3',
-        title : 'Lactose',
+        title : 'Crustacés',
         selected : false,
     },{
         id: '4',
-        title : 'Céréales',
+        title : 'Soja',
         selected : false,
     },{
         id: '5',
-        title : 'Céréales',
+        title : 'Gluten',
         selected : false,
     },{
         id: '6',
-        title : 'Céréales',
+        title : 'Oeufs',
         selected : false,
     },{
         id: '7',
-        title : 'Céréales',
+        title : 'Moutarde',
         selected : false,
     },{
         id: '8',
@@ -104,7 +104,7 @@ const DATA = [
         selected : false,
     },{
         id: '9',
-        title : 'Céréales',
+        title : 'Graine de Sésame',
         selected : false,
     },
   ];
