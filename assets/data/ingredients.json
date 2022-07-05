@@ -21,15 +21,22 @@
       "unit": "g"
     },
     {
-      "name": "farine",
-      "image": "https://www.academiedugout.fr/images/9582/370-274/ffffff/fotolia_59270770_subscription_xl.jpg?poix=50&poiy=50",
+      "name": "abricot",
+      "image": "https://www.academiedugout.fr/images/138/370-274/ffffff/abricot_031.jpg?poix=50&poiy=50",
       "category": "Fruits",
       "quantity": "5",
       "unit": "g"
     },
     {
-      "name": "farine",
-      "image": "https://www.academiedugout.fr/images/9582/370-274/ffffff/fotolia_59270770_subscription_xl.jpg?poix=50&poiy=50",
+      "name": "persil",
+      "image": "https://www.academiedugout.fr/images/187/370-274/ffffff/persil_000.jpg?poix=50&poiy=50",
+      "category": "Legumes",
+      "quantity": "5",
+      "unit": "g"
+    },
+    {
+      "name": "emmental",
+      "image": "https://www.academiedugout.fr/images/7520/370-274/ffffff/emmental-copy.jpg?poix=50&poiy=50",
       "category": "Fruits",
       "quantity": "5",
       "unit": "g"

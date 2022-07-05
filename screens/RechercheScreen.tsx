@@ -34,7 +34,7 @@ export default function RechercheScreen({navigation}) {
                     return (
                         <TouchableOpacity style={styles.item} key={key}>
                             <Image style={styles.image} source={{uri: val.image}}/>
-                            <View style={{alignItems: "center", flexDirection:'row', backgroundColor: "#F5F5F5"}}>
+                            <View style={{alignItems: "center", flexDirection:'row', backgroundColor: "#FFFFFF"}}>
                                 <Text style={styles.flatListTitle}> {val.name} </Text>
                                 <MaterialCommunityIcons name={"plus"} size={50} color={"#209209"}/>
                             </View>
@@ -119,9 +119,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     item: {
-        backgroundColor: "#f5f5f5",
-        padding: 20,
-        borderRadius: 15,
+        backgroundColor: "#ffffff",
+        padding: 3,
+        borderRadius: 5,
         borderTopColor: "#000000",
         borderTopWidth: 1,
         flexDirection: 'row',
