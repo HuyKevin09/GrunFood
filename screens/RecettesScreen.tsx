@@ -9,19 +9,47 @@ import { SafeAreaView, FlatList, StatusBar,TouchableOpacity } from 'react-native
 import recettesJson from "../assets/data/recettes.json";
 import Navigation from '../navigation';
 
-import {db} from '../firebase';
+import {auth, db} from '../firebase';
+import firebase from '../firebase';
 
 export default function RecettesScreen({navigation}) {
     const [search, setSearch] = useState("")
 
     const [recettes, setRecettes] = useState([])
 
+    const user = firebase.default.auth().currentUser;
+    const userDocument = db.collection("Utilisateur").doc(user?.uid)
+    const [userDetails, setUserDetails] = useState('')
+
     const fetchBlogs=async()=>{
-        const response=db.collection('Recette');
-        const data=await response.get();
-        data.docs.forEach(recette => {
-            setRecettes(recettes => [...recettes,recette.data()])
-        })
+
+        // const response =await userDocument
+        // response.get().then(snapshot => setUserDetails(snapshot.data()))
+
+        // const response2=db.collection('Recette');
+        // const dataRecette = await response2.get()
+
+        // if (userDetails["regime_alimentaire"] == "vegan"){
+        //     dataRecette.docs.forEach(recipe => {
+        //         const [regimeCorrect, setRegimeCorrect] = useState(true)
+        //         const fetchBlogs2=async()=>{
+        //             const ingredientDocument = response2.doc(recipe.id).collection('Ingredients')
+        //             const dataIngredient = await ingredientDocument.get() 
+        //             dataIngredient.docs.forEach(ingredient => {
+        //                 if (ingredient.data().)
+        //                 setIngredients(ingredients => [...ingredients, ingredient.data()])
+        //             })
+        //         }
+        //         fetchBlogs2()
+        //     })
+        // }
+
+
+        const response2=db.collection('Recette');
+        const data=await response2.get();
+            data.docs.forEach(recette => {
+                setRecettes(recettes => [...recettes,recette.data()])
+            })
     }
 
     useEffect(() => {
@@ -51,12 +79,12 @@ export default function RecettesScreen({navigation}) {
                         }
                     })
                         .map((recette, key) =>{
-                        // console.log(recettes)
+                        // console.log(recette)
                         return(
                             <TouchableOpacity key={key} style={styles.item} onPress={() => navigation.navigate(
                                 {
                                     name: "RecetteIndividuelle",
-                                    params: recette
+                                    params: recette,
                                 })}>
                                 <Text style={styles.title2}>{recette.Nom_recette}</Text>
                                 <Text style={styles.title3}>Score Pollution : {recette.indice_de_pollution}</Text>

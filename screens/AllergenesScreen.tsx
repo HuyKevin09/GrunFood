@@ -2,7 +2,7 @@ import { StyleSheet,StatusBar, Button, TouchableOpacity, FlatList,ScrollView,} f
 
 import { Ionicons } from '@expo/vector-icons'; 
 import { Text, View, } from '../components/Themed';
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
 import firebase from '../firebase';
 import {db} from '../firebase';
@@ -18,13 +18,32 @@ export default function AllergenesScreen({navigation} : RootStackScreenProps<'Ro
         navigation.replace("Root");
    }
 
+   const [listeAllergenes, setListeAllergenes] = useState([])
+
+    const fetchBlogs=async()=>{
+        const response=db.collection('Ingredient');
+        const data=await response.get();
+        data.docs.forEach(ingredient => {
+            if (ingredient.data().Type_allergene == "allergène") {
+                setListeAllergenes(listeAllergenes => [...listeAllergenes,ingredient.data().Nom])}
+                // console.log(ingredient.data().Nom)
+        })        
+        // console.log(listeAllergenes)
+    }
+
+    useEffect(() => {
+        fetchBlogs();
+    }, [])
+
+
+
     const [allergene, setAllergene]= useState('')
 
     const Item = ({ item, onPress}) => (
         <TouchableOpacity onPress={onPress}>
-        <View style={[styles.item, {backgroundColor : item.title === allergene ? "#209209" : "#f5f5f5"}]}>
-            <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor : item.title === allergene ? "#209209" : "#f5f5f5"}}>
-                <Text>{item.title}</Text>
+        <View style={[styles.item, {backgroundColor : item === allergene ? "#209209" : "#f5f5f5"}]}>
+            <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor : item === allergene ? "#209209" : "#f5f5f5"}}>
+                <Text>{item}</Text>
             </View>
         </View>
         </TouchableOpacity>
@@ -35,7 +54,7 @@ export default function AllergenesScreen({navigation} : RootStackScreenProps<'Ro
             <Item 
                 item={item}
                 onPress = {() => 
-                    setAllergene(item.title)}
+                    setAllergene(item)}
             />
         )
     };
@@ -52,9 +71,9 @@ export default function AllergenesScreen({navigation} : RootStackScreenProps<'Ro
 
             <View style={styles.flatlist}>
                 <FlatList
-                    data={DATA}
+                    data={listeAllergenes}
                     renderItem={renderItem}
-                    keyExtractor={item => item.id}
+                    // keyExtractor={item => item.id}
                     extraData={setAllergene}
                 />
             </View>

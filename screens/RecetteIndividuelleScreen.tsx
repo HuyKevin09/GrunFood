@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Image, ScrollView, TouchableOpacity} from 'react-native';
 import { SafeAreaView, FlatList, StatusBar } from 'react-native';
 import {Text, View} from '../components/Themed';
@@ -9,13 +9,85 @@ import {db} from '../firebase';
 
 export default function RecetteIndividuelleScreen({route}) {
 
-  const chooseAllergene = () => {
-    console.log('Choix allergene fait');
-    const user = firebase.default.auth().currentUser;
-    const userDocument = db.collection("Preference").doc(user?.uid).update({
-            Allergene: allergene,
-        });
+const [ingredients, setIngredients] = useState([])
+const [procedures, setProcedures] = useState([])
+
+const fetchBlogs=async()=>{
+    const response=db.collection('Recette');
+    const data=await response.get();
+    data.docs.forEach(recipe => {
+        if (recipe.data().ID == route.params.ID) {
+            // console.log(recipe.id)
+            const fetchBlogs2=async()=>{
+                const ingredientDocument = response.doc(recipe.id).collection('Ingredients')
+                const dataIngredient = await ingredientDocument.get() 
+                //console.log(dataIngredient.docs)
+                dataIngredient.docs.forEach(ingredient => {
+                    setIngredients(ingredients => [...ingredients, ingredient.data()])
+                })
+
+                const proceduresDocument = response.doc(recipe.id).collection('Procedure')
+                const dataProcedure = await proceduresDocument.get() 
+                dataProcedure.docs.forEach(procedure => {
+                    setProcedures(procedures => [...procedures, procedure.data()])
+                })
+
+            }
+            fetchBlogs2()
+        }
+    })
 }
+
+useEffect(() => {
+    fetchBlogs();
+}, [])
+
+// POUR LES INGREDIENTS
+
+const App = () => {
+    const renderItem = ({ item }) => (
+      <Item item={item} />
+    );
+    return (
+        <SafeAreaView style={styles.container}>
+          <FlatList
+            data={ingredients}
+            renderItem={renderItem}
+            keyExtractor={item => item.Nom}
+          />
+        </SafeAreaView>
+      );
+    }
+
+    const Item = ({ item }) => (
+        <View style={styles.item}>
+          <Text style={styles.ingredient}>{item.quantite} {item.Nom}</Text>
+        </View>
+      );
+
+
+    // POUR LES PROCEDURES
+
+    const App2 = () => {
+        const renderItem2 = ({ item }) => (
+          <Item2 item={item} />
+        );
+        return (
+            <SafeAreaView style={styles.container}>
+              <FlatList
+                data={procedures}
+                renderItem={renderItem2}
+              />
+            </SafeAreaView>
+          );
+        }
+    
+        const Item2 = ({ item }) => (
+            <View style={styles.item}>
+              <Text style={styles.ingredient}>{item.etape1}</Text>
+              <Text style={styles.ingredient}>{item.etape2}</Text>
+            </View>
+          );
 
 return (
   <ScrollView>
@@ -31,7 +103,9 @@ return (
                 </View>
 
                 <View>
-                    <TouchableOpacity style = {styles.icon1}>
+                    <TouchableOpacity style = {styles.icon1} onPress={() => {
+                        console.log(procedures)
+                    }}>
                         <MaterialCommunityIcons
                             name="heart-circle"
                             color={'#209209'}
@@ -41,6 +115,7 @@ return (
 
 
                     <TouchableOpacity style ={styles.icon2} onPress={() => {
+                        // console.log(ingredients)
                         const user = firebase.default.auth().currentUser;
                         const userDocument = db.collection("HistoriqueHebd").doc(user?.uid).collection("Recette").add({
                             date: new Date(),
@@ -66,7 +141,7 @@ return (
                <View style={styles.info3}>
                         <Text style={styles.titles}>Préparation</Text>
                         <View style={styles.row}>
-                        <Text>Faire Nkedie efhiehf ueoezbf fzuhuv uzehfuz hdodzbdc chcufizfzibc Faire Nkedie efhiehf ueoezbf fzuhuv uzehfuz hdodzbdc chcufizfzibc</Text>
+                        <App2></App2>
                         </View>
                </View>
 
@@ -98,32 +173,7 @@ const DATA = [
         unite : "kg",
     },
   ];
-
-
-
-
-  const Item = ({ item }) => (
-    <View style={styles.item}>
-      <Text style={styles.ingredient}>{item.quantite} {item.unite} {item.ingredient}</Text>
-     
-    </View>
-  );
-
-const App = () => {
-    const renderItem = ({ item }) => (
-      <Item item={item} />
-    );
-    return (
-        <SafeAreaView style={styles.container}>
-          <FlatList
-            data={DATA}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-          />
-        </SafeAreaView>
-      );
-    }
-    
+ 
      
   
 const styles = StyleSheet.create({
