@@ -37,12 +37,13 @@ export default function ProfilScreen({navigation} : RootStackScreenProps<'Connex
     useEffect(() => {
         fetchBlogs();
     }, [])
+    //{userDetails["nom"]}, , {userDetails["Allergene"]}, {userDetails["regime_alimentaire"]}, {userDetails["num_telephone"]}
 
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
                 <Image source={require("../assets/images/favicon.png")} style={styles.picture}/>
-                <Text style={styles.name}>{userDetails["nom"]}</Text>
+                <Text style={styles.name}>Nom</Text>
 
                 <View style={styles.info}>
                     <Text style={styles.titles}>Informations personnelles</Text>
@@ -52,7 +53,7 @@ export default function ProfilScreen({navigation} : RootStackScreenProps<'Connex
                     </View>
                     <View style={styles.row}>
                         <MaterialCommunityIcons name={"phone-outline"} size={30}/>
-                        <Text>Numero de telephone : {userDetails["num_telephone"]} </Text>
+                        <Text>Numero de telephone :  </Text>
                     </View>
                 </View>
 
@@ -62,14 +63,14 @@ export default function ProfilScreen({navigation} : RootStackScreenProps<'Connex
                         <MaterialCommunityIcons name={"silverware-fork-knife"} size={30}/>
                         <View style={styles.col}>
                             <Text>Allergènes</Text>
-                            <Text>{userDetails["Allergene"]}</Text>
+                            <Text>ALL</Text>
                         </View>
                     </View>
                     <View style={styles.row}>
                         <MaterialCommunityIcons name={"noodles"} size={30}/>
                         <View style={styles.col}>
                             <Text>Régime</Text>
-                            <Text>{userDetails["regime_alimentaire"]}</Text>
+                            <Text>Reg</Text>
                         </View>
                     </View>
                 </View>

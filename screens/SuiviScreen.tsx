@@ -11,19 +11,31 @@ import { AntDesign } from '@expo/vector-icons'
 import feed from '../assets/data/feed'
 
 import {db} from '../firebase';
+import firebase from '../firebase';
 import React,{useState,useEffect} from 'react';
 
 export default function SuiviScreen() {
+
+
     const [recettes, setRecettes] = useState([])
+    const [indices, setIndices] = useState([0])
+    const [dates, setDates] = useState([0])
+
 
     const fetchBlogs=async()=>{
-        const response=db.collection('HistoriqueHebd');
+        const user = firebase.default.auth().currentUser;
+        const response=db.collection('HistoriqueHebd').doc(user?.uid).collection('Recette');
         const data=await response.get();
+        // console.log(recettes)
         data.docs.forEach(recette => {
+            setIndices(indices => [...indices,recette.data().indice_de_pollution])
             setRecettes(recettes => [...recettes,recette.data()])
+            setDates(dates => [...dates, recette.data().date] )
+            // console.log("IN", recette)
+            // console.log(recette.data().indice_de_pollution)
             // const fetchBlogs2=async()=>{
             //     const response2 = response.doc(recette.id).collection('ingredient')
-            //     const data2 = await response2.get()
+            //     const data2 = await response2.get() 
             //     //console.log(data2.docs)
             //     data2.docs.forEach(ingredient => {
             //         console.log(ingredient.data())
@@ -31,15 +43,51 @@ export default function SuiviScreen() {
             // }
             // fetchBlogs2()
         }
+        );
+        // console.log("LONGUEUR", indices.length)
+        // console.log("INDICES", recettes)
+       
+    }
+
+    {     
+    useEffect(() => {
+        fetchBlogs()
+        indices.shift()
+        setIndices(indices) 
+    }, [])
+    }
+
+    //  [5,15,27,10]
+    const data = {
+        labels: ["S1", "S2", "S3", "S4"],
+        datasets: [
+            {
+                data: indices,
+                color: (opacity = 1) => `rgba(0, 115, 17, ${opacity})`,
+                strokeWidth: 2
+            }
+        ],
+        legend: ["Indice journalier"]
+    };
+
+    const Date = () => {
+        return(
+            <View style = {{flexDirection: 'row', justifyContent:'space-around', width: "60%", top: 450,}}>
+                <TouchableOpacity onPress={()=> console.log(indices)}>
+                    <AntDesign name="leftcircleo" size={24} color="green"/>
+                </TouchableOpacity>
+                <View style = {styles.date}>
+                    <Text> 20-07-22 to 27-07-22 </Text>
+                </View>
+                <TouchableOpacity>
+                    <AntDesign name="rightcircleo" size={24} color="green" />
+                </TouchableOpacity>
+            </View>
         )
     }
 
-
-    useEffect(() => {
-        fetchBlogs();
-    }, [])
     return (
-
+    
         <ScrollView style={styles.scrollView}>
 
             <View style={styles.container}>
@@ -73,8 +121,15 @@ export default function SuiviScreen() {
             </View>
 
             <View>
-                {
+                
+                { 
                     recettes && recettes.map(recette=>{
+                        // {console.log(indices)}
+                        
+                        // console.log("RECETTES", recettes)
+                        // console.log("INDICES", indices)
+                        console.log("DATES", dates)
+        
                         return(
                             // <View>
                             //     <Text>{recette["Nom_recette"]}</Text>
@@ -86,7 +141,7 @@ export default function SuiviScreen() {
                             // </View>
                             <View style={styles.item}>
                                 <Image style={styles.image} source = {{uri : recette["image_recette"]}}/>
-                                <View style={styles.stats}>
+                                <View style={{alignItems: 'center', justifyContent: 'center', flexDirection:'column', backgroundColor: "#f5f5f5"}}>
                                     <Text style={styles.flatListTitle}>{recette["nom_recette"]}</Text>
                                     <Text style={styles.quantite}> IP : {recette["indice_de_pollution"]} </Text>
                                 </View>
@@ -109,33 +164,8 @@ const chartConfig = {
     useShadowColorFromDataset: false // optional
 };
 
-const data = {
-    labels: ["S1", "S2", "S3", "S4"],
-    datasets: [
-        {
-            data: [20, 45, 28, 80, 99, 43],
-            color: (opacity = 1) => `rgba(0, 115, 17, ${opacity})`,
-            strokeWidth: 2
-        }
-    ],
-    legend: ["Indice hebdomadaire"]
-};
 
-const Date = () => {
-    return(
-        <View style = {{flexDirection: 'row', justifyContent:'space-around', width: "60%", top: 450,}}>
-            <TouchableOpacity>
-                <AntDesign name="leftcircleo" size={24} color="green"/>
-            </TouchableOpacity>
-            <View style = {styles.date}>
-                <Text> 20-07-22 to 27-07-22 </Text>
-            </View>
-            <TouchableOpacity>
-                <AntDesign name="rightcircleo" size={24} color="green" />
-            </TouchableOpacity>
-        </View>
-    )
-}
+
 
 
 
@@ -223,11 +253,5 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginLeft: 60,
         marginTop:5,
-    },
-    stats: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection:'column',
-        backgroundColor: "#f5f5f5"
-    },
+    }
 });
