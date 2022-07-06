@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Image, ScrollView, TouchableOpacity} from 'react-native';
+import {StyleSheet, Image, ScrollView, TouchableOpacity, Alert} from 'react-native';
 import { SafeAreaView, FlatList, StatusBar } from 'react-native';
 import {Text, View} from '../components/Themed';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
@@ -122,7 +122,8 @@ return (
                             image_recette: route.params.Image,
                             indice_de_pollution: route.params.indice_de_pollution,
                             nom_recette: route.params.Nom_recette,
-                        })
+                        });
+                        Alert.alert("Recette ajoutée à la consommation !");
                     }}>
                         <MaterialCommunityIcons
                             name="food-fork-drink"
