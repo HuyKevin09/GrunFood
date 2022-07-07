@@ -22,7 +22,6 @@ export default function SuiviScreen() {
     const [recettes, setRecettes] = useState([])
     const [indices, setIndices] = useState([0])
     const [dates, setDates] = useState([0])
-    // const today = new Date()
 
 
     const fetchBlogs=async()=>{
@@ -45,12 +44,19 @@ export default function SuiviScreen() {
         setIndices(indices) 
         dates.shift()
         setDates(dates)
+        console.log(indices.length)
+        while(indices.length > 7){
+            indices.shift()
+            setIndices(indices) 
+            dates.shift()
+            setDates(dates)
+        }
     }, [])
     }
 
     //  [5,15,27,10]
     const data = {
-        labels: dates,
+        labels: ["7 derniers repas"],
         datasets: [
             {
                 data: indices,

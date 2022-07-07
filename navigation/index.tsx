@@ -25,6 +25,7 @@ import RegimeScreen from '../screens/RegimeScreen';
 import AllergenesScreen from '../screens/AllergenesScreen';
 import InscriptionScreen from '../screens/InscriptionScreen';
 import RecetteIndividuelleScreen from '../screens/RecetteIndividuelleScreen';
+import RecetteIndividuelleFavorisScreen from '../screens/RecetteIndividuelleScreen';
 
 export default function Navigation({colorScheme} : { colorScheme : ColorSchemeName }) {
     return (
@@ -50,6 +51,7 @@ function RootNavigator() {
             <Stack.Screen name="Regime" component={RegimeScreen} options={{headerShown: false}}/>
             <Stack.Screen name="Allergenes" component={AllergenesScreen} options={{headerShown: false}}/>
             <Stack.Screen name="RecetteIndividuelle" component={RecetteIndividuelleScreen} options={{headerShown: false}}/>
+            <Stack.Screen name="RecetteIndividuelleFavoris" component={RecetteIndividuelleFavorisScreen} options={{headerShown: false}}/>
             <Stack.Screen
                 name="Root"
                 component={BottomTabNavigator}

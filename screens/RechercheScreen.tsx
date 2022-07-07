@@ -11,6 +11,7 @@ import {db} from "../firebase";
 export default function RechercheScreen({navigation}) {
     const [search, setSearch] = useState("")
     const [ingredients, setIngredients] = useState([])
+    const [searchIngredients, setSearchIngredients] = useState([])
     const response2 = db.collection('Ingredient');
     const fetchBlogs=async()=> {
         const data = await response2.get();
@@ -44,7 +45,9 @@ export default function RechercheScreen({navigation}) {
                     }
                 }).map((ingredient, key) => {
                     return (
-                        <TouchableOpacity style={styles.item} key={key}>
+                        <TouchableOpacity style={styles.item} key={key} onPress={() => {
+                            setSearchIngredients(searchIngredients => [...searchIngredients, ingredient])
+                        }}>
                             <Image style={styles.image} source={{uri: ingredient.Image}}/>
                             <Text style={styles.flatListTitle}> {ingredient.Nom} </Text>
                             <MaterialCommunityIcons name={"plus"} size={50} color={"#209209"}/>
@@ -54,7 +57,10 @@ export default function RechercheScreen({navigation}) {
             </ScrollView>
 
             <View style={styles.search}>
-                <TouchableOpacity style={styles.button_div} onPress={() => navigation.navigate("Recettes")}>
+                <TouchableOpacity style={styles.button_div} onPress={() => navigation.navigate({
+                    name: "Recettes",
+                    params: searchIngredients
+                })}>
                     <Text style={styles.button_title}>Rechercher une recette</Text>
                 </TouchableOpacity>
 
