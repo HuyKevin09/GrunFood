@@ -89,8 +89,8 @@ const App = () => {
             </View>
           );
 
-return (
-  <ScrollView>
+    return (
+      <ScrollView>
           <View style={styles.container}>
               <Image style={styles.image} source = {{uri : route.params.Image}}/>
 
@@ -151,7 +151,7 @@ return (
         </View>
         
         </ScrollView>
-);
+    );
 }
 
 const DATA = [

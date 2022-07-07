@@ -12,7 +12,7 @@ import Navigation from '../navigation';
 import {auth, db} from '../firebase';
 import firebase from '../firebase';
 
-export default function RecettesScreen({navigation}) {
+export default function RecettesScreen({navigation, route}) {
     const [search, setSearch] = useState("")
 
     const [recettes, setRecettes] = useState([])
@@ -81,11 +81,14 @@ export default function RecettesScreen({navigation}) {
                         .map((recette, key) =>{
                         // console.log(recette)
                         return(
-                            <TouchableOpacity key={key} style={styles.item} onPress={() => navigation.navigate(
-                                {
-                                    name: "RecetteIndividuelle",
-                                    params: recette,
-                                })}>
+                            <TouchableOpacity key={key} style={styles.item} onPress={() =>
+                            {navigation.navigate(
+                                    {
+                                        name: "RecetteIndividuelle",
+                                        params: recette,
+                                    })
+                                console.log(recette)
+                            }}>
                                 <Text style={styles.title2}>{recette.Nom_recette}</Text>
                                 <Text style={styles.title3}>Score Pollution : {recette.indice_de_pollution}</Text>
                                 <Text style={styles.title2}>Culture : {recette.culture}</Text>
