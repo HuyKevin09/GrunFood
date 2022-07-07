@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Image, ScrollView, TouchableOpacity} from 'react-native';
-import { SafeAreaView, FlatList, StatusBar } from 'react-native';
+import { SafeAreaView, FlatList, StatusBar, Alert } from 'react-native';
 import {Text, View} from '../components/Themed';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 
@@ -11,13 +11,15 @@ export default function RecetteIndividuelleScreen({route}) {
 
 const [ingredients, setIngredients] = useState([])
 const [procedures, setProcedures] = useState([])
+const [recetteID, setRecetteID] = useState()
 
 const fetchBlogs=async()=>{
     const response=db.collection('Recette');
     const data=await response.get();
     data.docs.forEach(recipe => {
         if (recipe.data().ID == route.params.ID) {
-            // console.log(recipe.id)
+            console.log(recipe.data())
+            setRecetteID(recipe.id)
             const fetchBlogs2=async()=>{
                 const ingredientDocument = response.doc(recipe.id).collection('Ingredients')
                 const dataIngredient = await ingredientDocument.get() 
@@ -103,9 +105,17 @@ return (
                 </View>
 
                 <View>
-                    <TouchableOpacity style = {styles.icon1} onPress={() => {
-                        console.log(procedures)
-                    }}>
+                        <TouchableOpacity style = {styles.icon1} onPress={() => {
+                                const user = firebase.default.auth().currentUser;
+                                const userDocument = db.collection("HistoriqueFavBd").doc(user?.uid).collection("Recette").add({
+                                    Image: route.params.Image,
+                                    indice_de_pollution: route.params.indice_de_pollution,
+                                    Nom_recette: route.params.Nom_recette,
+                                    temps_preparation: route.params.temps_preparation,
+                                    ID: route.params.ID,
+                                });
+                                Alert.alert("Recette ajoutée aux favoris !");
+                            }}>
                         <MaterialCommunityIcons
                             name="heart-circle"
                             color={'#209209'}
@@ -123,6 +133,7 @@ return (
                             indice_de_pollution: route.params.indice_de_pollution,
                             nom_recette: route.params.Nom_recette,
                         })
+                        Alert.alert("Recette ajoutée à la consommation !");
                     }}>
                         <MaterialCommunityIcons
                             name="food-fork-drink"
@@ -176,7 +187,7 @@ const DATA = [
  
      
   
-const styles = StyleSheet.create({
+  const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',

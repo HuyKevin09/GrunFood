@@ -36,9 +36,16 @@ export default function RecettesScreen({navigation}) {
         //             const ingredientDocument = response2.doc(recipe.id).collection('Ingredients')
         //             const dataIngredient = await ingredientDocument.get() 
         //             dataIngredient.docs.forEach(ingredient => {
-        //                 if (ingredient.data().)
-        //                 setIngredients(ingredients => [...ingredients, ingredient.data()])
+        //                 if (ingredient.data().type_regime == "viande" or "origine animale"){
+        //                      setRegimeCorrect(false)
+        //                  }
+        //                  if (ingredient.data().Nom==userDetails["Allergene"]) {
+        //                       setRegimeCorrect(false)
+        //                  }
         //             })
+    //                  if (regimeCorrect == true) {
+    //                      setRecettes(recipe => [...recettes, recipe.data()])
+    //                  }
         //         }
         //         fetchBlogs2()
         //     })

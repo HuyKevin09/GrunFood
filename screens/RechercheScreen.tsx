@@ -2,14 +2,27 @@ import {FlatList, ScrollView, StyleSheet, TextInput, TouchableOpacity, Image, Sa
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
-import {Component, useState} from "react";
+import {Component, useEffect, useState} from "react";
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import createStackNavigator from "react-native-screens/createNativeStackNavigator";
 import RecettesScreen from "./RecettesScreen";
-import ingredients from "../assets/data/ingredients.json"
+import {db} from "../firebase";
 
 export default function RechercheScreen({navigation}) {
     const [search, setSearch] = useState("")
+    const [ingredients, setIngredients] = useState([])
+    const response2 = db.collection('Ingredient');
+    const fetchBlogs=async()=> {
+        const data = await response2.get();
+        data.docs.forEach(ingredient => {
+            setIngredients(ingredients => [...ingredients, ingredient.data()])
+        })
+    }
+
+    useEffect(() => {
+        fetchBlogs();
+    }, [])
+
     return (
         <View style={styles.container}>
 
@@ -23,20 +36,18 @@ export default function RechercheScreen({navigation}) {
             </View>
 
             <ScrollView style={styles.ingredients_div}>
-                {ingredients.filter((ing) => {
+                {ingredients && ingredients.filter((ingredient) => {
                     if(search == "") {
-                        return ing;
-                    } else if(ing.name.toLowerCase().startsWith(search.toLowerCase())) {
-                        return ing;
+                        return ingredient;
+                    } else if(ingredient.Nom.toLowerCase().startsWith(search.toLowerCase())) {
+                        return ingredient;
                     }
-                }).map((val, key) => {
+                }).map((ingredient, key) => {
                     return (
                         <TouchableOpacity style={styles.item} key={key}>
-                            <Image style={styles.image} source={{uri: val.image}}/>
-                            <View style={{alignItems: "center", flexDirection:'row', backgroundColor: "#F5F5F5"}}>
-                                <Text style={styles.flatListTitle}> {val.name} </Text>
-                                <MaterialCommunityIcons name={"plus"} size={50} color={"#209209"}/>
-                            </View>
+                            <Image style={styles.image} source={{uri: ingredient.Image}}/>
+                            <Text style={styles.flatListTitle}> {ingredient.Nom} </Text>
+                            <MaterialCommunityIcons name={"plus"} size={50} color={"#209209"}/>
                         </TouchableOpacity>
                     )
                 })}
@@ -129,7 +140,10 @@ const styles = StyleSheet.create({
     },
     flatListTitle: {
         fontSize: 20,
-        marginLeft: 60,
+        // marginLeft: 60,
+        textAlign: "center",
+        flex: 1,
+        flexWrap: "wrap",
     },
     image : {
         height: 100,

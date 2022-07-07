@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         flex : 1,
     },
     curvedLine: {
-        marginTop : 80,
+        marginTop : 120,
         height : "70%",
         width: "70%",
         borderRadius: 90,
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: "100%",
         height: 48,
-        marginTop: 30,
+        marginTop: 70,
         fontFamily: 'serif',
         fontStyle: 'normal',
         fontWeight: '400',

@@ -14,38 +14,27 @@ import {db} from '../firebase';
 import firebase from '../firebase';
 import React,{useState,useEffect} from 'react';
 
+import { format } from 'date-fns'
+
 export default function SuiviScreen() {
 
 
     const [recettes, setRecettes] = useState([])
     const [indices, setIndices] = useState([0])
     const [dates, setDates] = useState([0])
+    // const today = new Date()
 
 
     const fetchBlogs=async()=>{
         const user = firebase.default.auth().currentUser;
         const response=db.collection('HistoriqueHebd').doc(user?.uid).collection('Recette');
         const data=await response.get();
-        // console.log(recettes)
         data.docs.forEach(recette => {
             setIndices(indices => [...indices,recette.data().indice_de_pollution])
             setRecettes(recettes => [...recettes,recette.data()])
-            setDates(dates => [...dates, recette.data().date] )
-            // console.log("IN", recette)
-            // console.log(recette.data().indice_de_pollution)
-            // const fetchBlogs2=async()=>{
-            //     const response2 = response.doc(recette.id).collection('ingredient')
-            //     const data2 = await response2.get() 
-            //     //console.log(data2.docs)
-            //     data2.docs.forEach(ingredient => {
-            //         console.log(ingredient.data())
-            //     })
-            // }
-            // fetchBlogs2()
+            setDates(dates => [...dates, format(recette.data().date.toDate(), 'dd-MM')] )
         }
         );
-        // console.log("LONGUEUR", indices.length)
-        // console.log("INDICES", recettes)
        
     }
 
@@ -54,12 +43,14 @@ export default function SuiviScreen() {
         fetchBlogs()
         indices.shift()
         setIndices(indices) 
+        dates.shift()
+        setDates(dates)
     }, [])
     }
 
     //  [5,15,27,10]
     const data = {
-        labels: ["S1", "S2", "S3", "S4"],
+        labels: dates,
         datasets: [
             {
                 data: indices,
@@ -72,8 +63,8 @@ export default function SuiviScreen() {
 
     const Date = () => {
         return(
-            <View style = {{flexDirection: 'row', justifyContent:'space-around', width: "60%", top: 450,}}>
-                <TouchableOpacity onPress={()=> console.log(indices)}>
+            <View style = {{flexDirection: 'row', justifyContent:'space-around', width: "60%", top: 420,}}>
+                <TouchableOpacity>
                     <AntDesign name="leftcircleo" size={24} color="green"/>
                 </TouchableOpacity>
                 <View style = {styles.date}>
@@ -124,21 +115,11 @@ export default function SuiviScreen() {
                 
                 { 
                     recettes && recettes.map(recette=>{
-                        // {console.log(indices)}
-                        
                         // console.log("RECETTES", recettes)
                         // console.log("INDICES", indices)
-                        console.log("DATES", dates)
+                        // console.log("DATES", dates)
         
                         return(
-                            // <View>
-                            //     <Text>{recette["Nom_recette"]}</Text>
-                            //     <Text>{recette["ID"]}</Text>
-                            //     <Text>{recette["culture"]}</Text>
-                            //     <Text>{recette["indice_de_pollution"]}</Text>
-                            //     <Text>{recette["ingredients"]}</Text>
-                            //     <Image style={styles.image} source={{uri : recette["Image"]}}/>
-                            // </View>
                             <View style={styles.item}>
                                 <Image style={styles.image} source = {{uri : recette["image_recette"]}}/>
                                 <View style={{alignItems: 'center', justifyContent: 'center', flexDirection:'column', backgroundColor: "#f5f5f5"}}>
@@ -160,8 +141,8 @@ const chartConfig = {
     backgroundGradientFromOpacity: 0,
     backgroundGradientToOpacity: 0,
     color: (opacity = 1) => `rgba(181, 181, 181, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
-    useShadowColorFromDataset: false // optional
+    strokeWidth: 2, 
+    useShadowColorFromDataset: false 
 };
 
 
@@ -179,7 +160,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         width: 213,
         height: 48,
-        top: 100,
+        top: 50,
         fontStyle: 'normal',
         fontWeight: '400',
         fontSize: 40,
@@ -191,7 +172,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: "80%",
         height: "60%",
-        top: 170,
+        top: 130,
     },
     indices : {
         position: 'relative',
@@ -213,7 +194,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: 176,
         height: 22,
-        top: 550,
+        top: 540,
         fontStyle: 'normal',
         fontWeight: '400',
         fontSize: 18,
