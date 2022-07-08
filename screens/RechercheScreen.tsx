@@ -1,4 +1,4 @@
-import {FlatList, ScrollView, StyleSheet, TextInput, TouchableOpacity, Image, SafeAreaView} from 'react-native';
+import {FlatList, ScrollView, StyleSheet, TextInput, TouchableOpacity, Image, SafeAreaView, Alert} from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
@@ -46,7 +46,8 @@ export default function RechercheScreen({navigation}) {
                 }).map((ingredient, key) => {
                     return (
                         <TouchableOpacity style={styles.item} key={key} onPress={() => {
-                            setSearchIngredients(searchIngredients => [...searchIngredients, ingredient])
+                            setSearchIngredients(searchIngredients => [...searchIngredients, ingredient]),
+                            Alert.alert("Ajout : ", ingredient.Nom)
                         }}>
                             <Image style={styles.image} source={{uri: ingredient.Image}}/>
                             <Text style={styles.flatListTitle}> {ingredient.Nom} </Text>
