@@ -44,7 +44,7 @@ export default function FavorisScreen({navigation}) {
                         <View>
                             <TouchableOpacity style={styles.item} onPress={() => navigation.navigate(
                                 {
-                                    name: "RecetteIndividuelle",
+                                    name: "RecetteIndividuelleFavoris",
                                     params: recette
                                 })}>
                             <Image style={styles.image} source = {{uri : recette["Image"]}}/>

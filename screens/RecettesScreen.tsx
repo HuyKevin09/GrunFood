@@ -12,7 +12,7 @@ import Navigation from '../navigation';
 import {auth, db} from '../firebase';
 import firebase from '../firebase';
 
-export default function RecettesScreen({navigation}) {
+export default function RecettesScreen({navigation, route}) {
     const [search, setSearch] = useState("")
 
     const [recettes, setRecettes] = useState([])
@@ -20,43 +20,73 @@ export default function RecettesScreen({navigation}) {
     const user = firebase.default.auth().currentUser;
     const userDocument = db.collection("Utilisateur").doc(user?.uid)
     const [userDetails, setUserDetails] = useState('')
+    const [regimeCorrect, setRegimeCorrect] = useState(true)
 
     const fetchBlogs=async()=>{
 
-        // const response =await userDocument
-        // response.get().then(snapshot => setUserDetails(snapshot.data()))
-
-        // const response2=db.collection('Recette');
-        // const dataRecette = await response2.get()
-
-        // if (userDetails["regime_alimentaire"] == "vegan"){
-        //     dataRecette.docs.forEach(recipe => {
-        //         const [regimeCorrect, setRegimeCorrect] = useState(true)
-        //         const fetchBlogs2=async()=>{
-        //             const ingredientDocument = response2.doc(recipe.id).collection('Ingredients')
-        //             const dataIngredient = await ingredientDocument.get() 
-        //             dataIngredient.docs.forEach(ingredient => {
-        //                 if (ingredient.data().type_regime == "viande" or "origine animale"){
-        //                      setRegimeCorrect(false)
-        //                  }
-        //                  if (ingredient.data().Nom==userDetails["Allergene"]) {
-        //                       setRegimeCorrect(false)
-        //                  }
-        //             })
-    //                  if (regimeCorrect == true) {
-    //                      setRecettes(recipe => [...recettes, recipe.data()])
-    //                  }
-        //         }
-        //         fetchBlogs2()
-        //     })
-        // }
-
+        const response =await userDocument
+        response.get().then(snapshot => setUserDetails(snapshot.data()))
 
         const response2=db.collection('Recette');
-        const data=await response2.get();
-            data.docs.forEach(recette => {
-                setRecettes(recettes => [...recettes,recette.data()])
+        const dataRecette = await response2.get()
+
+        if (userDetails["regime_alimentaire"] == "vegan"){
+            dataRecette.docs.forEach(recipe => {
+                // console.log(recipe.data().ID)
+
+                if (recipe.data().Type_regime == "vegan"){
+                    setRecettes(recettes => [...recettes, recipe.data()])
+                }
+                //         const fetchBlogs2=async()=>{
+        //             // console.log(recipe.ID)
+        //             const ingredientDocument = response2.doc(recipe.id).collection('Ingredients')
+        //             const dataIngredient = await ingredientDocument.get() 
+        //             // console.log(dataIngredient)
+        //             dataIngredient.docs.forEach(ingredient => {
+        //             //     console.log(ingredient)
+        //                 if (ingredient.data().Type_regime == "viande"){
+        //                      setRegimeCorrect(false)
+        //                     console.log("recette", false) 
+        //                  }
+        //                  if (ingredient.data().Nom ==userDetails["Allergene"]) {
+        //                       setRegimeCorrect(false)
+        //                     // console.log(false)
+        //                  }
+        //             })
+        //             if (regimeCorrect == true) {
+        //                  setRecettes(recettes => [...recettes, recipe.data()])
+        //              }
+        //         }
+        //         fetchBlogs2()
+        //         setRegimeCorrect(true)
             })
+        }
+
+
+        if (userDetails["regime_alimentaire"] == "vegetarien"){
+            dataRecette.docs.forEach(recipe => {
+                // console.log(recipe.data().ID)
+
+                if (["végétarien", "vegan"].includes(recipe.data().Type_regime)){
+                    setRecettes(recettes => [...recettes, recipe.data()])
+                }
+            })
+        }
+
+        if (userDetails["regime_alimentaire"] == "aucun"){
+            dataRecette.docs.forEach(recipe => {
+                    setRecettes(recettes => [...recettes, recipe.data()])
+            })
+        }
+
+
+
+        // VERSION FONCTIONNELLE
+        // const response2=db.collection('Recette');
+        // const data=await response2.get();
+        //     data.docs.forEach(recette => {
+        //         setRecettes(recettes => [...recettes,recette.data()])
+        //     })
     }
 
     useEffect(() => {
@@ -86,11 +116,11 @@ export default function RecettesScreen({navigation}) {
                         }
                     })
                         .map((recette, key) =>{
-                        // console.log(recette)
+                        // console.log(recettes)
                         return(
                             <TouchableOpacity key={key} style={styles.item} onPress={() => navigation.navigate(
                                 {
-                                    name: "RecetteIndividuelle",
+                                    name: "RecetteIndividuelleFavoris",
                                     params: recette,
                                 })}>
                                 <Text style={styles.title2}>{recette.Nom_recette}</Text>

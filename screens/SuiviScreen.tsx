@@ -44,19 +44,13 @@ export default function SuiviScreen() {
         setIndices(indices) 
         dates.shift()
         setDates(dates)
-        console.log(indices.length)
-        while(indices.length > 7){
-            indices.shift()
-            setIndices(indices) 
-            dates.shift()
-            setDates(dates)
-        }
+        // console.log(indices.length)
     }, [])
     }
 
     //  [5,15,27,10]
     const data = {
-        labels: ["7 derniers repas"],
+        labels: dates,
         datasets: [
             {
                 data: indices,
@@ -67,21 +61,6 @@ export default function SuiviScreen() {
         legend: ["Indice journalier"]
     };
 
-    const Date = () => {
-        return(
-            <View style = {{flexDirection: 'row', justifyContent:'space-around', width: "60%", top: 420,}}>
-                <TouchableOpacity>
-                    <AntDesign name="leftcircleo" size={24} color="green"/>
-                </TouchableOpacity>
-                <View style = {styles.date}>
-                    <Text> 20-07-22 to 27-07-22 </Text>
-                </View>
-                <TouchableOpacity>
-                    <AntDesign name="rightcircleo" size={24} color="green" />
-                </TouchableOpacity>
-            </View>
-        )
-    }
 
     return (
     
@@ -94,11 +73,10 @@ export default function SuiviScreen() {
 
                     <View style= {styles.indices}>
 
-                        <View style = {{alignItems: 'center', backgroundColor: "rgba(217, 242, 229, 0.27)", }}>
+                        <View style = {{alignItems: 'center', width: "100%", 
+                        
+                        backgroundColor: "rgba(217, 242, 229, 0.27)", }}>
                             <Text style={{textAlign: 'left'}}> Indice de pollution   </Text>
-                        </View>
-                        <View style = {{alignItems: 'center',}}>
-                            <Text> Indice de Consommation </Text>
                         </View>
 
                     </View>
@@ -112,7 +90,6 @@ export default function SuiviScreen() {
                     </View>
                 </View>
 
-                <Date></Date>
                 <Text style={styles.conso}> Mes consommations </Text>
 
             </View>
@@ -124,6 +101,12 @@ export default function SuiviScreen() {
                         // console.log("RECETTES", recettes)
                         // console.log("INDICES", indices)
                         // console.log("DATES", dates)
+                        // console.log(indices.length)
+                        while(indices.length > 7){
+                            console.log(indices.length)
+                            indices.shift()
+                            setIndices(indices) 
+                        }
         
                         return(
                             <View style={styles.item}>
@@ -200,7 +183,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: 176,
         height: 22,
-        top: 540,
+        top: 480,
         fontStyle: 'normal',
         fontWeight: '400',
         fontSize: 18,
@@ -227,6 +210,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         flexDirection: 'row',
         justifyContent: "space-between",
+        top: -50,
     },
     flatListTitle: {
         fontSize: 15,

@@ -100,28 +100,12 @@ return (
                       <Text style={styles.title2}> {route.params.Nom_recette} </Text>
                       <View style={styles.row1}>
                           <Text style = {styles.pollu}>IP : {route.params.indice_de_pollution}</Text>
-                          <Text style = {styles.pollu}>Temps : {route.params.temps_preparation}</Text>
+                          <Text style = {styles.pollu}>Tempsss : {route.params.temps_preparation}</Text>
                       </View>
                 </View>
 
                 <View>
-                        <TouchableOpacity style = {styles.icon1} onPress={() => {
-                                const user = firebase.default.auth().currentUser;
-                                const userDocument = db.collection("HistoriqueFavBd").doc(user?.uid).collection("Recette").add({
-                                    Image: route.params.Image,
-                                    indice_de_pollution: route.params.indice_de_pollution,
-                                    Nom_recette: route.params.Nom_recette,
-                                    temps_preparation: route.params.temps_preparation,
-                                    ID: route.params.ID,
-                                });
-                                Alert.alert("Recette ajoutée aux favoris !");
-                            }}>
-                        <MaterialCommunityIcons
-                            name="heart-circle"
-                            color={'#209209'}
-                            size={54}
-                        />
-                    </TouchableOpacity>
+                        
 
 
                     <TouchableOpacity style ={styles.icon2} onPress={() => {
